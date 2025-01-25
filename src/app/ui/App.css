@@ -1,28 +1,49 @@
-@import 'tailwindcss';
-
-html,
-body,
-:root {
-    height: 100%;
-
-    width: 100%;
-}
-
-.custom-app-container {
+/* 전체 레이아웃을 가로로 배치 */
+.container-fluid {
     display: flex;
-    flex-direction: column;
-    height: 100vh;
+    flex-direction: row;
+    height: 100vh; /* 화면을 가득 채움 */
 }
 
-.custom-nav-container {
-    background-color: #f1f1f1;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* 왼쪽 사이드바 스타일 */
+.left-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* 왼쪽 사이드바 너비 */
+    height: 100vh; /* 세로 길이 */
+    background-color: #343a40; /* 배경색 */
+    z-index: 10; /* 왼쪽 사이드바가 우선 순위가 높도록 설정 */
+    overflow-y: auto;
 }
 
-.custom-main-container {
-    flex-grow: 1;
-    background-color: #eaeaea;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* 오른쪽 슬라이드 패널 */
+.side-panel-container {
+    position: fixed; /* 화면에 고정 */
+    top: 56px; /* 네비게이션 바 아래로 이동 */
+    left: -250px; /* 기본적으로 화면 밖에 위치 (왼쪽에서 오른쪽으로 슬라이드) */
+    width: 250px; /* 오른쪽 패널 너비 */
+    height: calc(100vh - 56px); /* 화면 높이에서 네비게이션 바 크기만큼 제외 */
+    background-color:aquamarine; /* 패널의 배경색을 여기서 변경 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 9; /* 오른쪽 패널은 왼쪽 사이드바보다 낮은 z-index */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; /* 패널을 숨김 */
+    visibility: hidden; /* 화면에서 보이지 않도록 설정 */
+}
+
+/* 오른쪽 패널이 활성화되면 나타남 */
+.side-panel-container.active {
+    left: 250px; /* 왼쪽 사이드바 옆에 위치 */
+    opacity: 1; /* 패널이 보이도록 */
+    visibility: visible; /* 패널이 보이도록 */
+    padding-top: 20px; /* 상단에 여백을 추가 */
+}
+
+/* 메인 콘텐츠 영역 */
+.main-content {
+    flex-grow: 1; /* 나머지 공간을 차지하도록 설정 */
+    margin-left: 250px; /* 왼쪽 사이드바의 오른쪽 끝부터 시작 */
+    padding: 20px;
+    overflow-y: auto;
 }

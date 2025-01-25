@@ -1,0 +1,66 @@
+/* 게시판 리스트 스타일 */
+.board-list {
+    text-align: center; /* 글 중앙 정렬 */
+    margin: 20px;
+    font-size: 18px; /* 기본 글자 크기 설정 */
+  }
+  
+  /* 제목 스타일 */
+  .board-list h3 {
+    font-size: 2em; /* 제목 크기 */
+    margin-bottom: 20px;
+  }
+  
+  /* 테이블 스타일 */
+  .board-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .board-list th, .board-list td {
+    padding: 10px;
+    text-align: center; /* 테이블 셀 내용 중앙 정렬 */
+    border: 1px solid #ddd; /* 테이블 셀 경계선 */
+  }
+  
+  .board-list th {
+    background-color: #28a745; /* 초록색 배경 */
+    color: white; /* 흰색 글자 */
+    font-weight: bold; /* 헤더 글자 두껍게 */
+  }
+  
+  .board-list tr:nth-child(even) {
+    background-color: #f2f2f2; /* 짝수 행 배경색 */
+  }
+  
+  .board-list tr:hover {
+    background-color: #f1f1f1; /* 마우스 오버 시 배경색 */
+  }
+  
+  /* 글쓰기 버튼 스타일 */
+  .board-list button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .board-list button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* 링크 스타일 */
+  .board-list a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .board-list a:hover {
+    text-decoration: underline;
+  }
+  

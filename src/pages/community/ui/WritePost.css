@@ -1,0 +1,66 @@
+/* 글쓰기 폼 스타일 */
+.write-post {
+    margin-top: 50px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .write-post form {
+    width: 70%; /* 폼의 너비를 70%로 설정 */
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .write-post h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px; /* 제목과 폼 간의 여백 추가 */
+  }
+  
+  .write-post form div {
+    margin-bottom: 25px; /* 각 항목 간의 여백을 넓힘 */
+  }
+  
+  .write-post input,
+  .write-post textarea {
+    width: 100%;
+    padding: 16px; /* 입력 필드와 텍스트 영역 패딩을 더 키움 */
+    font-size: 18px; /* 폰트 크기를 키움 */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border 0.3s;
+  }
+  
+  .write-post input:focus,
+  .write-post textarea:focus {
+    border-color: #28a745;
+    outline: none;
+  }
+  
+  .write-post textarea {
+    height: 180px; /* 텍스트 영역 크기 증가 */
+    resize: vertical;
+  }
+  
+  .write-post button {
+    width: 100%;
+    padding: 18px;
+    font-size: 20px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .write-post button:hover {
+    background-color: #218838;
+  }
+  
+  .write-post button:focus {
+    outline: none;
+  }
+  

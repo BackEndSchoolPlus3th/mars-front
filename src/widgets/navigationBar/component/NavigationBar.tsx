@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { logoPath, userPath, pathItemMap } from '../../../shared';
-import '../ui/NavigationBarStyle.css';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import '../ui/NavigationBar.module.css';
 
 const NavigationBar: React.FC = () => {
     // 로그인 상태와 사용자 이름 관리
@@ -27,77 +31,75 @@ const NavigationBar: React.FC = () => {
     };
 
     return (
-        // 네비게이션 바
-        <div className="navbar-container bg-gray-800 text-white">
-            <nav className="navbar flex justify-between items-center p-4">
-                <div className="flex items-center">
-                    <div className="navbar-logo flex items-center">
-                        <a
-                            href={pathItemMap['home'].path}
-                            className="flex items-center"
-                        >
-                            <img
-                                src={logoPath}
-                                alt="Commars"
-                                className="w-8 mr-2"
-                            />
-                            Commars
-                        </a>
-                    </div>
-
-                    <div className="navbar-menu ml-4">
-                        <ul className="flex space-x-4">
-                            <li>
-                                <a
-                                    href={pathItemMap['recommend'].path}
-                                    className="hover:text-gray-400"
+        <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary navbar navbar-expand-lg navbar-light fixed-top" style={{ zIndex: 1050 }}>
+            <Container>
+                <Navbar.Brand href={pathItemMap['home'].path}>
+                    <img
+                        alt=""
+                        src={logoPath}
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                    />{' '}
+                    Commars
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link href={pathItemMap['recommend'].path}>
+                            {pathItemMap['recommend'].label}
+                        </Nav.Link>
+                        <Nav.Link href={pathItemMap['ranking'].path}>
+                            {pathItemMap['ranking'].label}
+                        </Nav.Link>
+                        <Nav.Link href={pathItemMap['community'].path}>
+                            {pathItemMap['community'].label}
+                        </Nav.Link>
+                    </Nav>
+                    <Nav>
+                        {isLoggedIn ? (
+                            <Nav className="ms-auto">
+                                <img
+                                    alt=""
+                                    src={userPath}
+                                    width="30"
+                                    height="30"
+                                    className="d-inline-block align-top"
+                                />
+                                <NavDropdown
+                                    title={`${formatUserName(userName)}님`}
+                                    id="collapsible-nav-dropdown"
                                 >
-                                    {pathItemMap['recommend'].label}
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href={pathItemMap['ranking'].path}
-                                    className="hover:text-gray-400"
-                                >
-                                    {pathItemMap['ranking'].label}
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href={pathItemMap['community'].path}
-                                    className="hover:text-gray-400"
-                                >
-                                    {pathItemMap['community'].label}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="navbar-user flex items-center">
-                    {isLoggedIn ? (
-                        <div className="navbar-user-info flex items-center">
-                            <img
-                                src={userPath}
-                                alt="user"
-                                className="w-5 mr-2"
-                            />
-                            <span>{formatUserName(userName)}</span>
-                        </div>
-                    ) : (
-                        <div className="navbar-auth flex space-x-4">
-                            <a href="/login" className="hover:text-gray-400">
-                                로그인
-                            </a>
-                            <a href="/signup" className="hover:text-gray-400">
-                                회원가입
-                            </a>
-                        </div>
-                    )}
-                </div>
-            </nav>
-        </div>
+                                    <NavDropdown.Item
+                                        href={pathItemMap['myPage'].path}
+                                    >
+                                        마이페이지
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item
+                                        href="#action/3.4"
+                                        onClick={handleLogout}
+                                    >
+                                        로그아웃
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </Nav>
+                        ) : (
+                            <Nav className="ms-auto">
+                                <a onClick={handleLogin}>로그인</a>
+                                <Nav.Link href={pathItemMap['login'].path}>
+                                    {pathItemMap['login'].label}
+                                </Nav.Link>
+                                <Nav.Link href={pathItemMap['signUp'].path}>
+                                    {pathItemMap['signUp'].label}
+                                </Nav.Link>
+                            </Nav>
+                        )}
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 };
+
 export default NavigationBar;

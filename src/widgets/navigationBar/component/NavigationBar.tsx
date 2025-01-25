@@ -31,7 +31,7 @@ const NavigationBar: React.FC = () => {
     };
 
     return (
-        <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+        <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary navbar navbar-expand-lg navbar-light fixed-top" style={{ zIndex: 1050 }}>
             <Container>
                 <Navbar.Brand href={pathItemMap['home'].path}>
                     <img
@@ -101,4 +101,5 @@ const NavigationBar: React.FC = () => {
         </Navbar>
     );
 };
+
 export default NavigationBar;

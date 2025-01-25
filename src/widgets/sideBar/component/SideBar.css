@@ -1,0 +1,27 @@
+/* 기존 사이드바 */
+.bg-dark {
+    background-color: #343a40;
+}
+
+/* 첫 번째 사이드바 (왼쪽) */
+.left-sidebar {
+    z-index: 1; /* 첫 번째 사이드바가 위에 오지 않도록 설정 */
+}
+
+/* 두 번째 사이드바 (슬라이드 패널) */
+.side-panel-container {
+    display: none; /* 기본적으로 보이지 않음 */
+    position: absolute; /* 위치 고정 */
+    top: 0;
+    left: 100%; /* 첫 번째 사이드바의 오른쪽 끝에 배치 */
+    height: 100vh; /* 전체 화면 높이 */
+    width: 250px; /* 패널 너비 */
+    background-color: #343a40; /* 배경색 */
+    z-index: 2; /* 두 번째 사이드바가 첫 번째 사이드바 위에 오도록 설정 */
+    transition: transform 0.3s ease;
+}
+
+/* 활성화된 상태에서 패널 보이기 */
+.side-panel-container.active {
+    display: block; /* 활성화되면 보이도록 설정 */
+}

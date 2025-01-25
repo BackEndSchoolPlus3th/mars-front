@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="javascript:kakaoLogin();"><img src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHM0OYfiFeMI2p9MWie0CvL99U4GA1gf6_kayTt_kBblFwHwo8BW8JXlqfnYxKPmmBcX6wYOjOFZaAfhmaS_qZ1FVPHfdui.5HuBGyop8__579sxOqlLvEujryqUaobxN2G1sE09XJfKAZwtAwOvv8Nc-&format=source" style="height:30px;width:auto"/></a>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        window.kakao.init("39851524d209502191c1f4ab7da1885c");
+        function kakaoLogin(){
+            window.Kakao.Auth.login({
+                scope:'profile_nickname, profile_image, account_email',
+                success: function(authObj) {
+                    console.log(authObj);
+                    window.Kakao.API.request({
+                        url: '/v2/user/me',
+                        success: res => {
+                            const kakao_account = res.kakao_account;
+                            console.log(kakao_account);
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

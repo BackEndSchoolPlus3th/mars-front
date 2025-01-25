@@ -19,10 +19,10 @@ h1 {
 }
 
 .auth-box {
-    background: #ffffff;
+    background: rgb(206, 119, 119);
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(247, 242, 247, 0.1);
     width: 400px;
 }
 

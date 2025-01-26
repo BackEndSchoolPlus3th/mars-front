@@ -50,7 +50,7 @@ const EditPost = () => {
   };
 
   return post ? (
-    <div>
+    <div className="edit-post">
       <h1>글수정 폼</h1>
       <form onSubmit={handleSubmit}>
         <div>이름: {post.author || '알 수 없음'}</div>

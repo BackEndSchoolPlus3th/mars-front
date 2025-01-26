@@ -10,6 +10,11 @@ import EditPost from '../pages/community/page/EditPost';
 import WritePost from '../pages/community/page/WritePost';
 import BoardList from '../pages/community/page/BoardList';
 import TopReviewers from '../pages/reviewRanking/page/TopReviewers';
+import Recommendation from '../pages/todayRecommand/page/TodayRecommand';
+import WheelOfFortune from '../pages/todayRecommand/page/WheelOfFortune';
+
+
+
 
 const App: React.FC = () => {
     //const Ranking: React.FC = () => <div>리뷰어 순위</div>;
@@ -17,7 +22,7 @@ const App: React.FC = () => {
     const SignUp: React.FC = () => <div>회원가입 페이지</div>;
     //const Community: React.FC = () => <div>커뮤니티 페이지</div>;
     // const MyPage: React.FC = () => <div>마이 페이지</div>;
-    const Recommendation: React.FC = () => <div>오늘 뭐 먹지 페이지</div>;
+    //const Recommendation: React.FC = () => <div>오늘 뭐 먹지 페이지</div>;
     // fetch(import.meta.env.VITE_CORE_FRONT_BASE_URL + 'api/v1/test')
     //     .then((res) => res.json())
     //     .then((data) => console.log(data));
@@ -50,11 +55,13 @@ const App: React.FC = () => {
                         path={pathItemMap['community'].path}
                         element={<BoardList />}
                     />
+                    <Route path="/wheel" element={<WheelOfFortune />} />
 
                     <Route path="/board/:postId" element={<BoardDetail />} />
                     <Route path="/edit/:postId" element={<EditPost />} />
                     <Route path="/write" element={<WritePost />} /> {/* 글쓰기 폼 라우트 추가 */}
                     <Route path="/top-reviewers" element={<TopReviewers />} /> {/* 경로 추가 */}
+                    
 
                     <Route
                         path={pathItemMap['myPage'].path}

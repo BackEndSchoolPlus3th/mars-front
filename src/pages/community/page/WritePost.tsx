@@ -33,17 +33,21 @@ const WritePost = () => {
   };
 
   return (
-    <div>
+    <div className="write-post">
       <h1>글쓰기 폼</h1>
       <form onSubmit={handleSubmit}>
         <div>이름: John Doe</div>
         <div>
           제목: <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
         </div>
+        <br>
+        </br>
         <div>
           내용:
           <textarea value={content} onChange={(e) => setContent(e.target.value)} required />
         </div>
+        <br>
+        </br>
         <div>
           태그: <input type="text" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="예: 태그1,태그2" />
         </div>

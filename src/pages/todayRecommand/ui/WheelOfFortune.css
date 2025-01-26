@@ -1,0 +1,100 @@
+.WheelOfFortune {
+  position: fixed;
+  top: 100px; /* 네비게이션 바 아래 */
+  left: 500px; /* 오른쪽 슬라이드 패널 옆 */
+  width: 1500px; /* 상세 패널 너비 */
+  height: calc(100vh - 100px); /* 화면 높이에서 네비게이션 바 제외 */
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .wheel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    position: relative;
+  }
+  
+  .wheel {
+    position: relative;
+    width: 400px;  /* 사이즈 키움 */
+    height: 400px; /* 사이즈 키움 */
+    border-radius: 50%;
+    border: 5px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 2s ease-out;
+  }
+  
+  .wheel-segment {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    left: 50%;
+    transform-origin: 0% 100%;
+    clip-path: polygon(100% 0, 0 0, 50% 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 18px; /* 폰트 사이즈 증가 */
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .wheel-segment span {
+    transform: rotate(-90deg);
+  }
+  
+  /* 색상을 순서대로 고정 */
+  .wheel-segment:nth-child(1) { background-color: red; }     
+  .wheel-segment:nth-child(2) { background-color: orange; }  
+  .wheel-segment:nth-child(3) { background-color: green; }   
+  .wheel-segment:nth-child(4) { background-color: blue; }    
+  .wheel-segment:nth-child(5) { background-color: purple; }  
+  
+  .wheel-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;  /* 사이즈 조정 */
+    height: 60px; /* 사이즈 조정 */
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid #333;
+  }
+  
+  .action-group {
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .selected-restaurant {
+    margin-top: 20px;
+  }
+  
+  .selected-restaurant img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  

@@ -1,5 +1,10 @@
 /* 수정 폼 스타일 */
 .edit-post {
+    position: fixed;
+    top: 100px; /* 네비게이션 바 아래 */
+    left: 500px; /* 오른쪽 슬라이드 패널 옆 */
+    width: 1500px; /* 상세 패널 너비 */
+    height: calc(100vh - 100px); /* 화면 높이에서 네비게이션 바 제외 */
     margin-top: 30px;
     font-family: 'Arial', sans-serif;
   }

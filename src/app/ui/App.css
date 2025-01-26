@@ -19,31 +19,80 @@
 
 /* 오른쪽 슬라이드 패널 */
 .side-panel-container {
-    position: fixed; /* 화면에 고정 */
-    top: 56px; /* 네비게이션 바 아래로 이동 */
-    left: -250px; /* 기본적으로 화면 밖에 위치 (왼쪽에서 오른쪽으로 슬라이드) */
-    width: 250px; /* 오른쪽 패널 너비 */
-    height: calc(100vh - 56px); /* 화면 높이에서 네비게이션 바 크기만큼 제외 */
-    background-color:aquamarine; /* 패널의 배경색을 여기서 변경 */
+    position: fixed;
+    top: 56px; /* 네비게이션 바 아래 */
+    left: -250px; /* 기본적으로 화면 밖에 위치 */
+    width: 400px; /* 오른쪽 패널 너비 */
+    height: calc(100vh - 56px); /* 화면 높이에서 네비게이션 바 크기 제외 */
+    background-color: aquamarine; /* 패널 배경색 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 9; /* 오른쪽 패널은 왼쪽 사이드바보다 낮은 z-index */
+    z-index: 9; /* 왼쪽 사이드바보다 낮음 */
     transition: transform 0.3s ease, opacity 0.3s ease;
-    opacity: 0; /* 패널을 숨김 */
-    visibility: hidden; /* 화면에서 보이지 않도록 설정 */
+    opacity: 0;
+    visibility: hidden;
 }
 
-/* 오른쪽 패널이 활성화되면 나타남 */
+/* 활성화된 오른쪽 패널 */
 .side-panel-container.active {
     left: 250px; /* 왼쪽 사이드바 옆에 위치 */
-    opacity: 1; /* 패널이 보이도록 */
-    visibility: visible; /* 패널이 보이도록 */
-    padding-top: 20px; /* 상단에 여백을 추가 */
+    opacity: 1;
+    visibility: visible;
+    padding-top: 20px;
 }
 
 /* 메인 콘텐츠 영역 */
 .main-content {
-    flex-grow: 1; /* 나머지 공간을 차지하도록 설정 */
-    margin-left: 250px; /* 왼쪽 사이드바의 오른쪽 끝부터 시작 */
+    flex-grow: 1;
+    margin-left: 250px; /* 왼쪽 사이드바 너비만큼 여백 */
     padding: 20px;
     overflow-y: auto;
+}
+
+/* 상세 패널 스타일 */
+.detail-panel {
+    position: fixed;
+    top: 56px; /* 네비게이션 바 아래 */
+    left: 650px; /* 오른쪽 슬라이드 패널 옆 */
+    width: 400px; /* 상세 패널 너비 */
+    height: calc(100vh - 56px); /* 화면 높이에서 네비게이션 바 제외 */
+    background-color: pink; /* 배경색 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 11; /* 화면 최상위에 배치 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* 상세 패널 헤더 */
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.detail-content{
+    top: 10px; /* 네비게이션 바 아래 */
+    width: 900px; /* 상세 패널 너비 */
+    height: calc(100vh - 10px); /* 화면 높이에서 네비게이션 바 제외 */
+    display:flex;
+    font-size: 1.2rem;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 닫기 버튼 */
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.9rem;
+    cursor: pointer;
+}
+
+/* 상세 패널 내용 */
+.detail-content {
+    margin-top: 20px;
 }

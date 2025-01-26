@@ -1,27 +1,26 @@
 /* 기존 사이드바 */
 .bg-dark {
+    position: fixed;
+    top: 100px; /* 네비게이션 바 아래 */
+    left: 500px; /* 오른쪽 슬라이드 패널 옆 */
+    width: 1500px; /* 상세 패널 너비 */
+    height: calc(100vh - 100px); /* 화면 높이에서 네비게이션 바 제외 */
     background-color: #343a40;
 }
 
 /* 첫 번째 사이드바 (왼쪽) */
 .left-sidebar {
-    z-index: 1; /* 첫 번째 사이드바가 위에 오지 않도록 설정 */
+    z-index: 1; /* 첫 번째 사이드바가 다른 요소 위로 오지 않도록 */
 }
 
-/* 두 번째 사이드바 (슬라이드 패널) */
+/* 오른쪽 패널 */
 .side-panel-container {
-    display: none; /* 기본적으로 보이지 않음 */
-    position: absolute; /* 위치 고정 */
+    position: absolute;
     top: 0;
-    left: 100%; /* 첫 번째 사이드바의 오른쪽 끝에 배치 */
-    height: 100vh; /* 전체 화면 높이 */
-    width: 250px; /* 패널 너비 */
-    background-color: #343a40; /* 배경색 */
-    z-index: 2; /* 두 번째 사이드바가 첫 번째 사이드바 위에 오도록 설정 */
+    left: 100%; /* 오른쪽 끝에 위치 */
+    height: 100vh;
+    width: 250px;
+    background-color: #343a40;
+    z-index: 2; /* 다른 패널 위에 배치 */
     transition: transform 0.3s ease;
-}
-
-/* 활성화된 상태에서 패널 보이기 */
-.side-panel-container.active {
-    display: block; /* 활성화되면 보이도록 설정 */
 }

@@ -1,0 +1,52 @@
+.board-detail {
+    position: fixed;
+    top: 100px; /* 네비게이션 바 아래 */
+    left: 500px; /* 오른쪽 슬라이드 패널 옆 */
+    width: 1500px; /* 상세 패널 너비 */
+    height: calc(100vh - 100px); /* 화면 높이에서 네비게이션 바 제외 */
+    margin: 20px;
+  }
+  
+  .board-detail h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .board-detail div {
+    margin-bottom: 10px;
+  }
+  
+  .board-detail .comments-section {
+    margin-top: 30px;
+  }
+  
+  .board-detail .comment {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+  
+  .board-detail .comment-form {
+    margin-top: 20px;
+  }
+  
+  .board-detail .comment-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .board-detail .comment-form button {
+    padding: 10px;
+  }
+  
+  .board-detail a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .board-detail a:hover {
+    text-decoration: underline;
+  }
+  

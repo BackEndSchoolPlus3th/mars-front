@@ -1,31 +1,7 @@
-/* .logo {
-    margin-bottom: 16px;
-    width: 40px;
-    height: 40px;
+.nav-pills li a:hover {
+    background-color: blue;
+}
+.left-sidebar {
+    margin-top: 20px; /* 상단 간격 추가 */
 }
 
-.menu-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 24px;
-    font-size: 12px;
-    color: #333;
-    cursor: pointer;
-    :hover {
-        background-color: blue;
-    }
-}
-
-.custom-side-bar {
-    min-height: 90vh;
-    border-radius: 0% 10px 10px 0%;
-    max-width: 0.8rem;
-}
-
-.menu-item a {
-    font-size: 0.9rem;
-}
-.menu-item span {
-    font-size: 0.8rem;
-} */

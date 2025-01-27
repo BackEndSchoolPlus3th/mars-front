@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// AuthProvider import
 import { NavigationBar } from '../widgets/index';
 import '../index';
 import './ui/App.css';
@@ -31,6 +32,7 @@ const App: React.FC = () => {
     // console.log(import.meta.env.VITE_CORE_API_BASE_URL);
 
     return (
+    
         <Router>
             <NavigationBar />
             <main>
@@ -74,6 +76,7 @@ const App: React.FC = () => {
                 </Routes>
             </main>
         </Router>
+    
     );
 };
 

@@ -2,27 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../ui/BoardList.css';
 
+
 function BoardList() {
-    const [posts, setPosts] = useState<{ id: number; title: string; tags: string[] }[]>([]);
-  
-    useEffect(() => {
-      // 게시물 데이터를 API에서 가져오는 코드 (예시)
-      setPosts([
-        { id: 1, title: "첫 번째 게시물", tags: ["React", "JavaScript", "웹개발"] },
-        { id: 2, title: "두 번째 게시물", tags: ["CSS", "디자인"] },
-        { id: 3, title: "세 번째 게시물", tags: ["Node.js", "서버"] },
-      ]);
-    }, []);
+  const [posts, setPosts] = useState<{ boardId: number; title: string; tags: string[] }[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    return (
-      <div className="board-list">
-        <h3>게시판</h3>
-        
-        {/* 글쓰기 버튼 추가 */}
-        <Link to="/write">
-          <button>글쓰기</button>
-        </Link>
+  const fetchPosts = () => {
+    fetch('http://localhost:8080/api/posts')  // 페이지 관련 파라미터 제거
+      .then((response) => {
+        if (!response.ok) throw new Error('게시글을 불러오는 데 실패했습니다.');
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);  // 응답 데이터 확인
+        setPosts(data.posts);  // 모든 게시글을 한 번에 설정
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error.message);
+        setLoading(false);
+      });
+  };
 
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  return (
+    <div className="board-list">
+      <h3>게시판</h3>
+      
+      <Link to="/write">
+        <button>글쓰기</button>
+      </Link>
+
+      {loading ? (
+        <p>로딩 중...</p>
+      ) : (
         <table>
           <thead>
             <tr>
@@ -34,15 +50,13 @@ function BoardList() {
           <tbody>
             {posts.length > 0 ? (
               posts.map((post, index) => (
-                <tr key={post.id}>
+                <tr key={post.boardId}>  {/* boardId 사용 */}
                   <td>{index + 1}</td>
                   <td>
-                    <Link to={`/board/${post.id}`}>{post.title}</Link>
+                    <Link to={`/board/${post.boardId}`}>{post.title}</Link> {/* boardId 사용 */}
                   </td>
-                  <td>
-                    {/* 태그들을 쉼표로 구분해서 표시 */}
-                    {post.tags.join(', ')}
-                  </td>
+                  <td>{post.tags && post.tags.length > 0 ? post.tags.join(', ') : '태그 없음'}</td>
+                  
                 </tr>
               ))
             ) : (
@@ -52,8 +66,9 @@ function BoardList() {
             )}
           </tbody>
         </table>
-      </div>
-    );
+      )}
+    </div>
+  );
 }
 
 export default BoardList;

@@ -1,8 +1,10 @@
 /* global Kakao */
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { logoPath } from '../../../shared'; // 로고 경로 가져오기
 import '../ui/loginPageStyle.css';
+import { useAuth } from '../../../widgets/navigationBar/component/AuthContext';
 
 const KakaoLoginButton: React.FC = () => {
   useEffect(() => {
@@ -65,8 +67,9 @@ const KakaoLoginButton: React.FC = () => {
 };
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useAuth(); // useAuth에서 login 가져오기
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -76,20 +79,24 @@ const LoginPage: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
+        credentials: "include", // 쿠키 포함
         body: JSON.stringify({ email, password }),
       });
 
       if (response.ok) {
+        const data = await response.json();
         alert("로그인 성공!");
-        navigate("/");
+        login(data.email); // 로그인 상태 업데이트
+        navigate("/"); // 로그인 후 홈 화면으로 이동
       } else {
         alert("로그인 실패: 이메일 또는 비밀번호를 확인하세요.");
       }
     } catch (error) {
       console.error("로그인 오류:", error);
+      alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
+  
 
   return (
     <div className="auth-container">

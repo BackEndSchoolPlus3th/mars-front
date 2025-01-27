@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../ui/EditPost.css';
+import { useAuth } from '../../../widgets/navigationBar/component/AuthContext';
 
 const EditPost = () => {
+  const { isLoggedIn, email } = useAuth();
   const { postId } = useParams();
   const navigate = useNavigate();
-  const [post, setPost] = useState<{ author?: string; title: string; content: string; tags?: string[] } | null>(null);
+  const [post, setPost] = useState<{ email?: string; title: string; content: string; tags?: string[] } | null>(null);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tags, setTags] = useState('');
@@ -34,12 +36,13 @@ const EditPost = () => {
       tags: tags.split(',').map((tag) => tag.trim()),
     };
 
-    fetch(`/api/posts/${postId}`, {
+    fetch(`http://localhost:8080/api/posts/${postId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(postData),
+      credentials: 'include',  // This ensures the session cookie is sent with the request
     })
       .then((response) => {
         if (!response.ok) throw new Error('게시글 수정 실패');
@@ -47,13 +50,14 @@ const EditPost = () => {
         navigate('/community');
       })
       .catch((error) => alert(error.message));
+    
   };
 
   return post ? (
     <div className="edit-post">
       <h1>글수정 폼</h1>
       <form onSubmit={handleSubmit}>
-        <div>이름: {post.author || '알 수 없음'}</div>
+        <div>이름: {email}</div>
         <div>
           제목: <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
         </div>

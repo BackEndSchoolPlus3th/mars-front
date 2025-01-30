@@ -1,110 +1,122 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../ui/WheelOfFortune.css";
-import { useNavigate, useLocation } from "react-router-dom";
 
+// 식당 데이터 타입 정의
 interface Restaurant {
   id: number;
   name: string;
-  image: string;
   rating: number;
-  reviewSummary: string;
+  review: string;
+}
+
+interface RestaurantDetails {
+  id: number;
+  email: string;
+  name: string;
+  rating: number;
+  review: string;
+  category: string;
+  latitude: number;
+  longitude: number;
+  keywords: string;
+  reviewer: string;
 }
 
 const WheelOfFortune: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [restaurants, setRestaurants] = useState<Restaurant[]>(
-    location.state?.restaurants || []
-  );
-  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
-  const [spinning, setSpinning] = useState<boolean>(false);
+  const [restaurants] = useState<Restaurant[]>(location.state?.restaurants || []);
+  const [selectedRestaurant, setSelectedRestaurant] = useState<RestaurantDetails | null>(null); // 세부사항 상태
+  const [spinning, setSpinning] = useState(false);
 
-  useEffect(() => {
-    if (restaurants.length === 0) {
-      fetchRestaurants();
-    }
-  }, [restaurants]);
-
-  const fetchRestaurants = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/api/random", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data: Restaurant[] = await response.json();
-      setRestaurants(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  // 세부사항 가져오기
+  const fetchRestaurantDetails = (name: string) => {
+    fetch(`http://localhost:8080/api/restaurants/detail?name=${encodeURIComponent(name)}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch restaurant details");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setSelectedRestaurant(data); // 세부사항 상태 업데이트
+      })
+      .catch((error) => console.error("Error fetching restaurant details:", error));
   };
 
+  // 돌림판 회전
   const handleSpin = () => {
-    if (restaurants.length > 0 && !spinning) {
+    if (!spinning && restaurants.length > 0) {
       setSpinning(true);
-      const topRestaurants = restaurants.slice(0, 5);
-      const randomIndex = Math.floor(Math.random() * topRestaurants.length);
-      const rotation = 360 * 5 + (360 / topRestaurants.length) * randomIndex;
-      (document.querySelector(".wheel") as HTMLElement)!.style.transform = `rotate(${rotation}deg)`;
+      const randomIndex = Math.floor(Math.random() * restaurants.length);
+      const rotation = 360 * 5 + (360 / restaurants.length) * randomIndex;
+
+      (document.querySelector(".wheel") as HTMLElement).style.transform = `rotate(${rotation}deg)`;
 
       setTimeout(() => {
-        setSelectedRestaurant(topRestaurants[randomIndex]);
+        const randomRestaurant = restaurants[randomIndex];
+        fetchRestaurantDetails(randomRestaurant.name); // 세부사항 가져오기
         setSpinning(false);
       }, 2000);
     }
   };
 
-  const handleImageClick = (id: number) => {
-    navigate(`/restaurant/${id}`);
-  };
-
   const fixedColors = ["red", "orange", "green", "blue", "purple"];
-  const topRestaurants = restaurants.slice(0, 5);
 
   return (
     <div className="WheelOfFortune">
       <h1>오늘의 맛집 돌림판</h1>
-      <div className={`wheel-container ${spinning ? "spinning" : ""}`}>
+      <div className="wheel-container">
         <div className="wheel">
-          {topRestaurants.map((restaurant, index) => (
+          {restaurants.map((restaurant, index) => (
             <div
               key={restaurant.id}
               className="wheel-segment"
               style={{
-                transform: `rotate(${(360 / topRestaurants.length) * index}deg)`,
+                transform: `rotate(${(360 / restaurants.length) * index}deg)`,
                 backgroundColor: fixedColors[index % fixedColors.length],
               }}
             >
-              <span>{restaurant.name}</span>
+              {/* 식당 이름 클릭 시 세부정보 가져오기 */}
+              <span
+                style={{ cursor: "pointer", color: "white", textDecoration: "underline" }}
+                onClick={() => fetchRestaurantDetails(restaurant.name)}
+              >
+                {restaurant.name}
+              </span>
             </div>
           ))}
           <div className="wheel-center"></div>
         </div>
       </div>
-
       <div className="action-group">
         <button onClick={handleSpin} disabled={spinning}>돌림판 돌리기</button>
       </div>
 
+      {/* 선택된 식당 세부정보 */}
       {selectedRestaurant && (
         <div className="selected-restaurant">
-          <h3>선택된 맛집</h3>
-          <img
-            src={selectedRestaurant.image}
-            alt="선택된 식당 이미지"
-            onClick={() => handleImageClick(selectedRestaurant.id)}
-            style={{ cursor: "pointer" }}
-          />
-          <h3>{selectedRestaurant.name}</h3>
-          <p>⭐ {selectedRestaurant.rating} / 5.0</p>
-          <p>{selectedRestaurant.reviewSummary}</p>
+          <h2>세부정보</h2>
+          <h3><strong>이름:</strong> {selectedRestaurant.name}</h3>
+          <p><strong>평점:</strong> ⭐ {selectedRestaurant.rating} / 5.0</p>
+          <p><strong>리뷰:</strong> {selectedRestaurant.review}</p>
+          <p><strong>카테고리:</strong> {selectedRestaurant.category}</p>
+          <p><strong>키워드:</strong> {selectedRestaurant.keywords}</p>
+          <p><strong>리뷰어:</strong> {selectedRestaurant.reviewer}</p>
+          <p><strong>위치:</strong> 위도 {selectedRestaurant.latitude}, 경도 {selectedRestaurant.longitude}</p>
+          <button onClick={() => setSelectedRestaurant(null)}>닫기</button>
         </div>
       )}
+
+      <br>
+      </br>
+
+      <button onClick={() => navigate(-1)}>뒤로 가기</button>
     </div>
   );
 };

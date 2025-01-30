@@ -55,8 +55,8 @@ const NavigationBar: React.FC = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/recommend">추천</Nav.Link>
-            <Nav.Link href="/ranking">랭킹</Nav.Link>
+            <Nav.Link href="/recommendation">오늘뭐먹지?</Nav.Link>
+            <Nav.Link href="/ranking">인기리뷰어</Nav.Link>
             <Nav.Link href="/community">커뮤니티</Nav.Link>
           </Nav>
           <Nav>

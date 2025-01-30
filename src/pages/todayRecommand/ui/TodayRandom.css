@@ -17,8 +17,8 @@
 }
 
 .restaurant-card {
-    width: 300px;
-    border: 1px solid #ccc;
+    width: 500px;
+    border: 2px solid #164202;
     border-radius: 8px;
     padding: 10px;
     text-align: left;

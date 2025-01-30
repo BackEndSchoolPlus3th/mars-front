@@ -1,96 +1,40 @@
-/*global kakao*/
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../ui/TodayRandom.css";
+import { useAuth } from '../../../widgets/navigationBar/component/AuthContext';
 
-// 맛집 데이터 타입 정의
 interface Restaurant {
   id: number;
-  image: string;
-  place_name: string;
+  name: string;
   rating: number;
   keywords: string;
-  reviewSummary: string;
-  address_name: string;
-  phone: string;
+  review: string;
+}
+
+interface RestaurantDetails {
+  id: number;
+  email: string;
+  name: string;
+  rating: number;
+  review: string;
+  category: string;
+  latitude: number;
+  longitude: number;
+  keywords: string;
+  reviewer: string;
 }
 
 function TodayRecommand() {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]); // 맛집 데이터 배열
-  const [headerText, setHeaderText] = useState<string>("XX님의 방문한 맛집/찜한 리스트를 바탕으로 추천한 결과입니다.");
-  const [myLocation, setMyLocation] = useState<kakao.maps.LatLng | null>(null); // 위치 정보
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [selectedRestaurant, setSelectedRestaurant] = useState<RestaurantDetails | null>(null); // 세부사항
+  const { email } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadKakaoMap = () => {
-      const script = document.createElement('script');
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=카카오api키&libraries=services`; 
-      script.async = true;
-      script.onload = () => {
-        kakao.maps.load(initKakaoMap);
-      };
-      script.onerror = () => {
-        console.error("Kakao Maps API 로드 실패");
-      };
-      document.head.appendChild(script);
-    };
-
-    const initKakaoMap = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            const userLatLng = new kakao.maps.LatLng(latitude, longitude);
-            setMyLocation(userLatLng);
-
-            if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
-              const ps = new kakao.maps.services.Places();
-
-              ps.categorySearch(
-                "FD6",
-                (data, status) => {
-                  if (status === kakao.maps.services.Status.OK) {
-                    setRestaurants(data);
-                  } else {
-                    console.error("식당 검색 실패");
-                  }
-                },
-                {
-                  location: userLatLng,
-                  radius: 1000,
-                  sort: kakao.maps.services.SortBy.DISTANCE,
-                }
-              );
-            } else {
-              console.error("Kakao Maps API가 정상적으로 로드되지 않았습니다.");
-            }
-          },
-          (error) => {
-            console.error("Error fetching location:", error);
-          }
-        );
-      } else {
-        console.error("Geolocation을 지원하지 않는 브라우저입니다.");
-      }
-    };
-
-    loadKakaoMap();
-  }, []);
-
-  useEffect(() => {
-    if (myLocation) {
-      fetchRestaurants("optimal");
-    }
-  }, [myLocation]);
-
-  const fetchRestaurants = (endpoint: string, isInitialLoad = false) => {
-    if (!myLocation) return;
-
-    fetch(`http://localhost:8080/api/${endpoint}?lat=${myLocation.lat}&lng=${myLocation.lng}`, {
+  // 랜덤 추천 식당 API 호출
+  const fetchRestaurants = () => {
+    fetch(`http://localhost:8080/api/restaurants/random?lat=37.5665&lng=126.9780&email=${email}`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       credentials: "include",
     })
       .then((response) => {
@@ -100,57 +44,78 @@ function TodayRecommand() {
         return response.json();
       })
       .then((data) => {
-        setRestaurants(data);
-        if (!isInitialLoad) {
-          setHeaderText(
-            endpoint === "favorites"
-              ? "XX님을 위한 새로운 찜한 맛집을 추천한 결과입니다."
-              : "XX님을 위한 새로운 맛집을 추천한 결과입니다."
-          );
-        }
+        setRestaurants(data.map((name: string, index: number) => ({
+          id: index + 1, // 고유 ID 생성
+          name,
+          review: "사용자의 위치와 찜기반의 랜덤 추천 식당입니다.",
+        })));
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
 
-  const handleImageClick = (id: number) => {
-    navigate(`/restaurant/${id}`);
+  // 식당 세부정보 API 호출
+  const fetchRestaurantDetails = (name: string) => {
+    fetch(`http://localhost:8080/api/restaurants/detail?name=${encodeURIComponent(name)}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch restaurant details");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setSelectedRestaurant(data); // 세부사항 상태 업데이트
+      })
+      .catch((error) => console.error("Error fetching restaurant details:", error));
   };
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
 
   return (
     <div className="TodayRandom">
-      <h1>
-        <p>{headerText}</p>
-      </h1>
+      <h1>{email}님을 위한 추천 식당</h1>
       <div className="restaurant-list">
-        {restaurants.map((restaurant, index) => (
-          <div key={index} className="restaurant-card">
-            <img
-              src={restaurant.image}
-              alt="식당 이미지"
-              onClick={() => handleImageClick(restaurant.id)}
-              onError={(e) => console.error("Image load error:", e.target.src)}
-              style={{ cursor: "pointer" }}
-            />
-            <h3>{restaurant.place_name}</h3>
-            <p>⭐ {restaurant.rating} / 5.0</p>
-            <p>특징: {restaurant.keywords}</p>
-            <p>리뷰 요약: {restaurant.reviewSummary}</p>
-            <p>주소: {restaurant.address_name}</p>
-            <p>전화번호: {restaurant.phone}</p>
+        {restaurants.map((restaurant) => (
+          <div key={restaurant.id} className="restaurant-card">
+            <div
+              style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+              onClick={() => fetchRestaurantDetails(restaurant.name)}
+            >
+              <h3>{restaurant.name}</h3>
+            </div>
+            <p>{restaurant.review}</p>
           </div>
         ))}
       </div>
-      <div className="action-group">
-        <div className="action-item">
-          <input type="checkbox" />
-          <button onClick={() => fetchRestaurants("optimal")}>최적의 식당찾기</button>
+
+      {/* 세부사항 */}
+      {selectedRestaurant && (
+        <div className="restaurant-details">
+          <h2>세부정보</h2>
+          <h3><strong>이름:</strong> {selectedRestaurant.name}</h3>
+          <p><strong>평점:</strong> ⭐ {selectedRestaurant.rating} / 5.0</p>
+          <p><strong>리뷰:</strong> {selectedRestaurant.review}</p>
+          <p><strong>카테고리:</strong> {selectedRestaurant.category}</p>
+          <p><strong>키워드:</strong> {selectedRestaurant.keywords}</p>
+          <p><strong>리뷰어:</strong> {selectedRestaurant.reviewer}</p>
+          
+          <button onClick={() => setSelectedRestaurant(null)}>닫기</button>
         </div>
-        <div className="action-item">
-          <input type="checkbox" />
-          <button onClick={() => fetchRestaurants("random")}>새로운 맛집 볼래요! 랜덤 섞기</button>
-        </div>
-      </div>
-      <div className="random-btn-container" onClick={() => navigate('/wheel', { state: { restaurants } })}>
+      )}
+
+      <br>
+      </br>
+
+      <button onClick={fetchRestaurants}>새로운 랜덤맛집 보기</button>
+      <div
+        className="random-btn-container"
+        onClick={() => navigate('/wheel', { state: { restaurants } })}
+      >
         돌림판 만들기
       </div>
     </div>
@@ -158,4 +123,3 @@ function TodayRecommand() {
 }
 
 export default TodayRecommand;
-

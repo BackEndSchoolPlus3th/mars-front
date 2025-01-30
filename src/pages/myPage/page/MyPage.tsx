@@ -1,8 +1,10 @@
 import React from 'react';
 import { logoPath } from '../../../shared';
 import '../ui/MyPageStyle.css';
+import { useAuth } from '../../../widgets/navigationBar/component/AuthContext';
 
 const MyPage: React.FC = () => {
+    const { isLoggedIn, email } = useAuth();
     return (
         <div className="mypage-container">
             <header className="mypage-header">
@@ -23,7 +25,7 @@ const MyPage: React.FC = () => {
                             alt="프로필"
                             className="profile-picture"
                         />
-                        <p className="username">닉네임,</p>
+                        <p className="username">{email},</p>
                         <button className="profile-edit-button">
                             프로필 변경
                         </button>

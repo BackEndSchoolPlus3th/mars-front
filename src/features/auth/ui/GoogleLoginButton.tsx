@@ -17,12 +17,28 @@ const GoogleLoginButton = () => {
     try {
       // 서버로 id_token을 전송하여 검증하고 JWT를 발급받음
       const res = await axios.post(
-        import.meta.env.VITE_CORE_API_BASE_URL + "/api/auth/google",
+        import.meta.env.VITE_CORE_API_BASE_URL + "/api/auth/login/google",
         {
           idToken,
         }
       );
-      console.log("Server Response:", res.data);
+
+      if (res.status == 200) {
+        console.log("Login Success:", res.data);
+        console.log("accessToken:", res.data.accessToken);
+        console.log("email:", res.data.email);
+        console.log("name:", res.data.name);
+        console.log("picture:", res.data.picture);
+
+        localStorage.setItem("accessToken", res.data.accessToken);
+        console.log(
+          "localStorage.accessToken:",
+          localStorage.getItem("accessToken")
+        );
+      } else {
+        console.error("Login Failed:", res.data);
+      }
+
       setJwtToken(res.data.token);
       setError(null);
     } catch (err) {

@@ -49,7 +49,24 @@
 }
 
 /* 상세 패널 스타일 */
+
+
 .detail-sidebar {
+    position: fixed;
+    top: 56px; /* 네비게이션 바 아래 */
+    left: 650px; /* 오른쪽 슬라이드 패널 옆 */
+    border: none;
+    font-size: 1.9rem;
+    cursor: pointer;
+    color: #333; /* X 버튼 색상 */
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .close-button:before {
+    content: "\2715"; /* X 문자 유니코드 */
+  }
+.detail-panel {
     position: fixed;
     top: 56px; /* 네비게이션 바 아래 */
     left: 650px; /* 오른쪽 슬라이드 패널 옆 */
@@ -90,14 +107,8 @@
     border: none;
     font-size: 1.9rem;
     cursor: pointer;
-    color: #333; /* X 버튼 색상 */
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .close-button:before {
-    content: "\2715"; /* X 문자 유니코드 */
-  }
+}
+
 
 /* 상세 패널 내용 */
 .detail-content {
@@ -111,7 +122,6 @@
     flex-direction: column;
     gap: 10px; /* 폼 내부 요소 간 간격 */
   }
-
 .review-form textarea {
     resize: none;
     margin-bottom: 20px; /* 아래쪽 여백을 늘려 간격 조절 */

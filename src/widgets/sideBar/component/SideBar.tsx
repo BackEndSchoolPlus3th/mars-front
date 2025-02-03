@@ -33,7 +33,8 @@ const Sidebar: React.FC = () => {
   // 지도 초기화 및 사용자 현재 위치 가져오기
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=카카오api키&libraries=services`;
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=c7958a7c0d07a3b72a7fee938b0703d8
+&libraries=services`;
     script.async = true;
     script.onload = () => {
       kakao.maps.load(() => {
@@ -448,7 +449,7 @@ try {
 
         {/* Detail Sidebar */}
 {isDetailSidebarOpen && selectedPlace && (
-  <div className="detail-sidebar">
+  <div className="detail-panel active">
     <h3>{selectedPlace.name} <button onClick={handleCloseDetailSidebar} className="close-button" style={{ float: 'right' }}>
       {/* 아무런 텍스트 없이 X 문자만 표시 */}
     </button></h3>

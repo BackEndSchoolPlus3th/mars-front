@@ -70,13 +70,19 @@ const MyPage: React.FC = () => {
                 </div>
                 <div className="profile-section">
                     <div className="profile-header">
-                        <img src="/path/to/profile.png" alt="프로필" className="profile-picture" />
+                        <img
+                            src="/path/to/profile.png"
+                            alt="프로필"
+                            className="profile-picture"
+                        />
                         <p className="username">{email},</p>
-                        <button className="profile-edit-button">프로필 변경</button>
+                        <button className="profile-edit-button">
+                            프로필 변경
+                        </button>
                     </div>
                     <div className="favorites">
                         <p>나의 찜</p>
-                        <p>{favoritesCount}</p>
+                        <p>{favoritesCount}</p> 
                     </div>
                     <div className="monthly-benefits">
                         <p>이번 달의 혜택 보러가기</p>

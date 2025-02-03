@@ -15,7 +15,6 @@
     max-height: 800px; /* 리뷰 리스트 높이 제한 */
     overflow-y: auto; /* 스크롤 가능하게 설정 */
 }
-
 .review-list {
     max-height: 200px; /* 리스트 길이 제한 */
     overflow-y: auto;
@@ -26,17 +25,14 @@
     border: 1px solid #ddd;
     border-radius: 10px;
 }
-
 .review-list li {
     padding: 10px;
     border-bottom: 1px solid #eee;
     text-align: left;
 }
-
 .review-list li:last-child {
     border-bottom: none;
 }
-
 .mypage-header {
     display: flex;
     align-items: center;
@@ -54,7 +50,7 @@
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 10px;
-    padding: 40px; /* 20px에서 40px로 변경 */
+    padding: 20px;
 }
 
 .review-section {

@@ -32,10 +32,9 @@ const NaverCallback = () => {
                     console.log('Naver Login Response:', response.data);
 
                     const user: User = {
-                        name: response.data.naverUser.name,
-                        email: response.data.naverUser.email,
-                        profileImageUrl:
-                            response.data.naverUser.profileImageUrl,
+                        name: response.data.authUser.name,
+                        email: response.data.authUser.email,
+                        profileImageUrl: response.data.authUser.profileImageUrl,
                         isLoggedIn: true,
                     };
 

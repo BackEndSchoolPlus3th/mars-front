@@ -30,9 +30,9 @@ const GoogleLoginButton = () => {
             console.log('Google Login Response:', res.data);
 
             const user: User = {
-                name: res.data.googleUser.name,
-                email: res.data.googleUser.email,
-                profileImageUrl: res.data.googleUser.profileImageUrl,
+                name: res.data.authUser.name,
+                email: res.data.authUser.email,
+                profileImageUrl: res.data.authUser.profileImageUrl,
                 isLoggedIn: true,
             };
 

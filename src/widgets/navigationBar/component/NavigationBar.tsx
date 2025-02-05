@@ -1,9 +1,8 @@
-import { logoPath, pathItemMap } from '../../../shared';
+import { logoPath, pathItemMap, Dropdown } from '../../../shared';
 import '../ui/NavigationBarStyle.css';
 import { RootState } from '../../../shared';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../../features';
-import { Dropdown } from '../../../shared';
 import { useNavigate } from 'react-router-dom';
 
 const NavigationBar: React.FC = () => {
@@ -104,7 +103,7 @@ const NavigationBar: React.FC = () => {
                         <div className="navbar-auth flex space-x-4">
                             <a
                                 href="/login"
-                                className="px-4 py-2 bg-gray-900 text-white rounded hover:bg-blue-900 transition duration-300"
+                                className="inline-flex justify-center items-center w-full px-4 py-2 text-sm font-medium text-black dark:text-white bg-white dark:bg-[#1E2028] border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-[#252731] focus:outline-none"
                             >
                                 로그인
                             </a>

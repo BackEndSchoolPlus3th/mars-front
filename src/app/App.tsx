@@ -12,6 +12,7 @@ import {
     RankingPage,
     BoardList,
     TodayRecommand,
+    NaverCallback,
 } from '../pages';
 import { store } from '../shared/store/Store';
 import { Provider } from 'react-redux';
@@ -55,6 +56,10 @@ const App: React.FC = () => {
                                     <Route
                                         path="/recommendation"
                                         element={<TodayRecommand />}
+                                    />
+                                    <Route
+                                        path="/auth/naver/callback"
+                                        element={<NaverCallback />}
                                     />
                                 </Routes>
                             </div>

@@ -1,36 +1,31 @@
 import React from 'react';
 import { logoPath, RootState } from '../../../shared';
 import '../ui/MyPageStyle.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { apiClient } from '../../../shared';
+import { useNavigate } from 'react-router-dom';
 
 const MyPage: React.FC = () => {
-    const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
+    const navigate = useNavigate();
 
-    console.log(user);
-
-    const fetchUserProfile = async () => {
-        try {
-            const response = await apiClient.get('/api/user/profile');
-            console.log(response.data);
-        } catch (error) {
-            console.error('프로필 조회 오류:', error);
+    React.useEffect(() => {
+        if (user.isLoggedIn === false) {
+            navigate('/login');
         }
-    };
+    }, [user.isLoggedIn, navigate]);
 
-    const fetchPublicData = async () => {
+    const fetchMe = async () => {
         try {
-            const response = await apiClient.get('/api/public/data');
-            console.log('공개 데이터:', response.data);
+            const response = await apiClient.get('/api/jwt/refresh');
+            console.log('refresh:', response.data);
         } catch (error) {
-            console.error('공개 데이터 가져오기 실패:', error);
+            console.error('나의 정보 가져오기 실패:', error);
         }
     };
 
     React.useEffect(() => {
-        fetchUserProfile();
-        fetchPublicData();
+        fetchMe();
     }, []);
 
     return (

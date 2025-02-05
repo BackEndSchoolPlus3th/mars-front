@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { logoPath } from '../../../shared';
-import { GoogleLoginButton } from '../../../features';
+import { logoPath, RootState } from '../../../shared';
+import { GoogleLoginButton, NaverLoginButton } from '../../../features';
+import { useSelector } from 'react-redux';
 
 function LoginPage() {
-    // const navigate = useNavigate();
-
-    const redirectUrl = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+    const user = useSelector((state: RootState) => state.user);
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const navigate = useNavigate();
 
-    console.log(clientId);
-    console.log(redirectUrl);
+    useEffect(() => {
+        if (user.isLoggedIn) {
+            navigate('/');
+        }
+    }, [user.isLoggedIn, navigate]);
 
     return (
         <div className="flex flex-col items-center justify-center h-full w-full pt-40 pb-40 pr-80 pl-80">
@@ -25,12 +28,13 @@ function LoginPage() {
                     <h1 className="text-4xl font-bold mb-8">ComMars</h1>
                 </div>
                 <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-                    <div className="social-login">
+                    <div className="social-login flex flex-col items-center justify-center">
                         <GoogleOAuthProvider clientId={clientId}>
                             <div className="flex justify-center">
                                 <GoogleLoginButton />
                             </div>
                         </GoogleOAuthProvider>
+                        <NaverLoginButton />
                     </div>
                 </div>
             </div>

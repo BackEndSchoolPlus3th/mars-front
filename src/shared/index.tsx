@@ -8,4 +8,6 @@ export { default as rank2Path } from './ui/ranking/medal_2.png';
 export { default as rank3Path } from './ui/ranking/medal_3.png';
 export type { RootState, AppDispatch } from './store/Store';
 export { default as Dropdown } from './ui/dropdown/Dropdown';
-export { default as apiClient } from './api/ApiClient';
+export { apiClient } from './api/ApiClient';
+
+export type { User, SocialState, LoginPayload } from './types/types';

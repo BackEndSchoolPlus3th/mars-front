@@ -68,4 +68,4 @@ const handleLogout = () => {
     window.location.href = '/login';
 };
 
-export default apiClient;
+export { apiClient, refreshAccessToken };

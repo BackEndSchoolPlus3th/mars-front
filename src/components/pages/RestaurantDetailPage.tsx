@@ -99,7 +99,7 @@ export default function RestaurantDetailPage() {
         <div className="flex items-center text-sm text-gray-600 mb-4">
           <span className="flex items-center text-orange-500">
             <Star size={16} className="mr-1" />
-            {restaurant.rating.toFixed(1)}
+            {restaurant.rate.toFixed(1)}
           </span>
           <span className="mx-2">•</span>
           <span>리뷰 {restaurant.reviewCount.toLocaleString()}</span>

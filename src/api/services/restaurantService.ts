@@ -22,10 +22,23 @@ const handleApiError = (error: any) => {
 // 추천 맛집 훅 수정
 export const useRecommendedRestaurants = () => {
   return useQuery<Restaurant[], Error>(["recommendedRestaurants"], async () => {
-    const response = await apiClient.get<ApiResponse<Restaurant[]>>(
-      `${RESTAURANTS_DOC_API}/sort/rate`
-    );
-    return response.data.data;
+    try {
+      // API 요청 시작 로깅
+      const recommendedRestaurantsApi = `${RESTAURANTS_DOC_API}/sort/rate`;
+
+      console.log("API 요청 시작: " + recommendedRestaurantsApi);
+
+      const response = await apiClient.get<ApiResponse<Restaurant[]>>(
+        recommendedRestaurantsApi
+      );
+
+      // 응답 데이터 구조 확인
+      console.log("API 응답 데이터:", response);
+      return response.data.data;
+    } catch (error) {
+      console.error("추천 맛집 API 에러:", error);
+      throw error;
+    }
   });
 };
 

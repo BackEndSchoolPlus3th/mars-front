@@ -20,7 +20,7 @@ export interface Restaurant {
   id: number;
   name: string;
   address: string;
-  rating: number;
+  rate: number;
   reviewCount: number;
   imageUrl: string;
   price: string;

@@ -116,3 +116,45 @@ export interface RestaurantListProps {
   restaurants: Restaurant[];
   onRestaurantClick: (id: number) => void;
 }
+
+// ✅ Board (게시글) 타입 추가
+export interface Board {
+    id: number; // 기존 id 필드 유지
+    boardId?: number; // 백엔드에서 넘어오는 boardId를 추가
+    title: string;
+    content: string;
+    user: {
+        id: number;
+        name: string;
+        profileImage?: string;
+    };
+    hashTags: string[];
+    viewCnt: number;
+    createdAt: string;
+    updatedAt: string;
+    comments: Comment[];
+}
+
+
+// ✅ Comment (댓글) 타입 추가
+// ✅ Comment (댓글) 타입 수정
+export interface Comment {
+    commentId: number;  // <-- id → commentId 변경
+    content: string;
+    user: {
+      userId: number;   // <-- id → userId 변경
+      name: string;
+      profileImage?: string;
+    };
+    createdAt: string;
+    replies?: Reply[];  // ✅ 대댓글 배열 추가
+  }
+  
+  
+  export interface Reply {
+    replyId: number;
+    content: string;
+    userId: number;
+    username: string;
+    createdAt: string;
+}

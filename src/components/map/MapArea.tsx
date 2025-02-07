@@ -1,16 +1,35 @@
-const MapArea = () => {
-    return (
-        <main className="flex-1 bg-white w-full h-full">
-            <div className="w-full h-full flex items-center justify-center">
-                <span className="text-gray-400 flex flex-col items-center">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full mb-3 flex items-center justify-center">
-                        🗺️
-                    </div>
-                    지도가 표시될 영역
-                </span>
-            </div>
-        </main>
-    );
+import React from "react";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+
+const MapArea: React.FC = () => {
+  const containerStyle = {
+    width: "100%",
+    height: "100%",
+  };
+
+  const defaultCenter = {
+    lat: 37.5665,
+    lng: 126.978,
+  };
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API_KEY as string,
+  });
+
+  if (!isLoaded) return <div>Loading...</div>;
+  return (
+    <div className="h-full w-full">
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={defaultCenter}
+        zoom={12}
+      >
+        {/* 마커를 중심 좌표에 표시 */}
+        <Marker position={defaultCenter} />
+      </GoogleMap>
+    </div>
+  );
 };
 
 export default MapArea;

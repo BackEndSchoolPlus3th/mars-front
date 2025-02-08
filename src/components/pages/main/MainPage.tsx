@@ -5,11 +5,13 @@ import MapArea from '../../map/MapArea';
 // import SideBar from '../../layout/main/sidebar/Sidebar';
 import { apiClient } from '../../../api';
 import Sidebar from '../../layout/main/sidebar/Sidebar';
-import SidebarDetail from '../../layout/main/sideBarDetail/container/SideBarDetailContainer';
+import SidebarDetail from '../../layout/main/sideBarDetail/container/SidebarDetailContainer';
+import RestaurantDetail from '../restaurantDetail/RestaurantDetail';
+import RestaurantDetailPage from '../restaurantDetail/RestaurantDetailPage';
 
 const MainPage = () => {
     const [selectedSideMenu, setSelectedSideMenu] = useState('search');
-    const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+    const [selectedRestaurant, setSelectedRestaurant] = useState(1);
 
     const fetchRefreshToken = async () => {
         try {
@@ -36,6 +38,14 @@ const MainPage = () => {
                     <div className="absolute h-full z-10">
                         <div className="flex h-full w-full z-10  p-4">
                             <SidebarDetail selectedMenu={selectedSideMenu} />
+                        </div>
+                        <div className="flex h-full w-full z-10  p-4">
+                            <RestaurantDetailPage />
+                        </div>
+                        <div className="flex h-full w-full z-10  p-4">
+                            <RestaurantDetail
+                                restaurantId={selectedRestaurant}
+                            />
                         </div>
                     </div>
                     <div className="absolute w-full h-full z-0">

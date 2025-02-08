@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { recommendedRestaurantsService } from "../../../api/services/recommendedRestaurantsService";
 import { Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../utils/store/Store";
+import { useSelector } from "react-redux";
 import { Alert, AlertDescription } from "../../../components/ui/alert";
 import Sidebar from "../../../components/pages/recommendedRestaurants/Sidebar";
 
@@ -22,13 +24,34 @@ const RecommendedRestaurantsPage = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState<any | null>(null);
   const navigate = useNavigate();
 
+  // ✅ 로그인한 유저 정보 가져오기
+  const user = useSelector((state: RootState) => state.user);
+  const isLoggedIn = user.isLoggedIn && (user.id ?? 0) > 0;
+
+
+  // ✅ 유저 상태에 따라 API 분기 처리
   const getRandomRestaurantsHandler = async () => {
     try {
-      const response = await recommendedRestaurantsService.getRandomRestaurants(37.571731, 127.011069, 1);
+      let response;
+      if (isLoggedIn) {
+        // 로그인한 유저
+        response = await recommendedRestaurantsService.getRandomRestaurants(
+          37.571731,
+          127.011069,
+          user.id ?? 0 // ✅ 로그인한 유저는 id 포함
+        );
+      } else {
+        // 비로그인 유저
+        response = await recommendedRestaurantsService.getNotUserRandomRestaurants(
+          37.571731,
+          127.011069
+        );
+      }
+
       console.log("Response:", response);
 
       if (response && response.data && Array.isArray(response.data)) {
-        setRandomRestaurants(response.data);
+        setRandomRestaurants(response.data);// ✅ 응답 구조 반영
       } else {
         throw new Error("식당 정보를 불러올 수 없습니다.");
       }
@@ -47,8 +70,9 @@ const RecommendedRestaurantsPage = () => {
   };
 
   useEffect(() => {
+    console.log("✅ 로그인 상태 변경됨, user:", user); // ✅ 디버깅용 로그 추가
     getRandomRestaurantsHandler();
-  }, []);
+  }, [user]); // ✅ userId 변경될 때 다시 불러오기
 
   if (!randomRestaurants || randomRestaurants.length === 0)
     return <ErrorState message="추천 맛집을 찾을 수 없습니다." />;
@@ -59,7 +83,9 @@ const RecommendedRestaurantsPage = () => {
       <div className="w-3/4 p-4">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">추천 맛집</h1>
-          <p className="text-gray-600">사용자 찜 및 거리 기반 추천 맛집 목록입니다.</p>
+          <p className="text-gray-600">{isLoggedIn
+      ? `${user.name}님의 찜 및 거리 기반 추천 맛집 목록입니다.`
+      : "비회원은 거리 기반 추천 맛집 목록을 확인할 수 있습니다."}</p>
         </div>
 
         <div className="mb-4 flex space-x-4">
@@ -75,6 +101,8 @@ const RecommendedRestaurantsPage = () => {
           >
             돌림판 🎡
           </button>
+          <p>현재 로그인한 유저 ID: {user?.id || "비회원"}</p> {/* ✅ 유저 ID 없을 경우 "비회원" 표시 */}
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -8,7 +8,13 @@ import {
   RestaurantResponse,
 } from "../../../../../../api/services/sidebarsearchService";
 
-const SidebarSearch: React.FC = () => {
+interface SidebarSearchProps {
+  onRestaurantSelect: (id: number) => void;
+}
+
+const SidebarSearch: React.FC<SidebarSearchProps> = ({
+  onRestaurantSelect,
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [restaurants, setRestaurants] = useState<RestaurantResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +35,6 @@ const SidebarSearch: React.FC = () => {
     loadRestaurants();
   }, []);
 
-  // 검색 기능 추가
   useEffect(() => {
     const handleSearch = async () => {
       if (searchQuery.trim()) {
@@ -37,6 +42,7 @@ const SidebarSearch: React.FC = () => {
         try {
           const data = await searchRestaurants(searchQuery);
           setRestaurants(data);
+          console.log("검색 결과:", data);
         } catch (error) {
           console.error("검색 실패:", error);
         } finally {
@@ -45,7 +51,6 @@ const SidebarSearch: React.FC = () => {
       }
     };
 
-    // 디바운스 처리
     const timeoutId = setTimeout(handleSearch, 500);
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
@@ -75,6 +80,7 @@ const SidebarSearch: React.FC = () => {
               name={restaurant.name}
               details={restaurant.details}
               averageRate={restaurant.averageRate}
+              onClick={onRestaurantSelect}
             />
           ))
         ) : (

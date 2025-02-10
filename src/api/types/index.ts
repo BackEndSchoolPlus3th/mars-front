@@ -185,3 +185,10 @@ export interface BusinessHourDTO {
   openTime: string;
   closeTime: string;
 }
+
+
+// ✅ 리뷰어 API 응답 타입
+export interface ReviewerResponse {
+  top: Reviewer[]; // 상위 3명의 리뷰어
+  others: Reviewer[]; // 나머지 리뷰어 목록
+}

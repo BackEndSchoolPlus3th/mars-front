@@ -75,7 +75,7 @@ const RecommendedRestaurantsPage = () => {
   }, [user]); // ✅ userId 변경될 때 다시 불러오기
 
   if (!randomRestaurants || randomRestaurants.length === 0)
-    return <ErrorState message="추천 맛집을 찾을 수 없습니다." />;
+    return <ErrorState message="오늘뭐먹지는 거리와 찜기반으로 찿기때문에 반드시 찜 식당을 추가해주세요." />;
 
   return (
     <div className="flex">

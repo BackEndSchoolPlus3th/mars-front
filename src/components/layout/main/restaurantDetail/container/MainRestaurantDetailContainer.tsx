@@ -42,20 +42,21 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
   }
 
   return (
-    <div className="w-[360px] bg-white border-l border-gray-200 overflow-hidden flex flex-col h-full">
+    <div className="flex flex-col w-[360px] bg-white border-r border-gray-200 rounded-lg shadow-lg h-full">
       <div className="relative h-64">
+        <div className="flex justify-end">
+          <button
+            onClick={() => handleClose()}
+            className="p-1 hover:bg-gray-100 rounded-full transition-colors m-3"
+          >
+            <X size={20} className="text-gray-500" />
+          </button>
+        </div>
         <img
           src={restaurant.imageUrl}
           alt={restaurant.name}
           className="w-full h-full object-cover"
         />
-        <button
-          onClick={handleClose}
-          className="absolute top-4 right-4 p-2 bg-black bg-opacity-50 rounded-full text-white hover:bg-opacity-60 transition-colors"
-          aria-label="Close"
-        >
-          <X size={20} />
-        </button>
       </div>
       <div className="flex-1 overflow-y-auto">
         <div className="p-4">

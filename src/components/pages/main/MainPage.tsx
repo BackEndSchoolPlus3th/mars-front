@@ -37,7 +37,7 @@ const MainPage = () => {
         </div>
         <div className="main-map-container max-w-full max-h-full w-full h-full relative">
           <div className="absolute h-full z-10">
-            <div className="flex flex-col">
+            <div className="flex flex-raw h-full">
               <div className="flex h-full w-full z-10 p-4">
                 <SidebarDetail
                   selectedMenu={selectedSideMenu}

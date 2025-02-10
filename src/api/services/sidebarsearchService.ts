@@ -11,7 +11,7 @@ export const fetchRestaurants = async (): Promise<RestaurantResponse[]> => {
   try {
     const response = await apiClient.get<RestaurantResponse[]>(
       //"/api/v1/restaurantsDoc/sort/rate"
-      "/api/v1/restaurant"
+      "/api/v1/restaurant/"
     );
     return response.data;
   } catch (error) {

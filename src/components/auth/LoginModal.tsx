@@ -3,8 +3,6 @@ import { AuthKakao, AuthGoogle, AuthNaver } from '../../api';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utils/store/Store';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 interface LoginModalProps {
     isOpen: boolean;

@@ -70,7 +70,7 @@ const RecommendedRestaurantsPage = () => {
   };
 
   useEffect(() => {
-    console.log("✅ 로그인 상태 변경됨, user:", user); // ✅ 디버깅용 로그 추가
+    console.log("✅ 로그인 상태 변경됨, user:", user); // ✅ 디버깅용 로그 추가함
     getRandomRestaurantsHandler();
   }, [user]); // ✅ userId 변경될 때 다시 불러오기
 

@@ -5,11 +5,11 @@ import {
     apiClient,
     login,
     User,
-    SocialState,    
+    SocialState,
     LoginPayload,
 } from '../../../api';
 
-const AuthNaverCallback = () => {
+const AuthKakaoCallback = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,15 +21,12 @@ const AuthNaverCallback = () => {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
-        const state = urlParams.get('state');
 
         if (code) {
-            const getNaverToken = async () => {
+            const getKakaoToken = async () => {
                 try {
-                    const response = await apiClient.post(
-                        '/api/auth/login/naver',{ code, state });
-
-                    console.log('Naver Login Response:', response.data);
+                    const response = await apiClient.post('/api/auth/login/kakao',{ code });
+                    console.log('Kakao Login Response:', response.data);
 
                     const user: User = {
                         name: response.data.authUser.name,
@@ -39,7 +36,7 @@ const AuthNaverCallback = () => {
                     };
 
                     const social: SocialState = {
-                        type: 'naver',
+                        type: 'kakao',
                         accessToken: response.data.accessToken,
                     };
 
@@ -51,11 +48,11 @@ const AuthNaverCallback = () => {
 
                     handleLogin(loginPayload);
                 } catch (error) {
-                    console.error('Naver Login failed:', error);
+                    console.error('Kakao Login failed:', error);
                 }
             };
 
-            getNaverToken();
+            getKakaoToken();
         }
     }, [handleLogin]);
 
@@ -63,11 +60,11 @@ const AuthNaverCallback = () => {
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="text-center">
                 <h1 className="text-2xl font-bold mb-4">
-                    네이버 로그인 처리 중...
+                    카카오 로그인 처리 중...
                 </h1>
                 <div className="flex justify-center">
                     <svg
-                        className="animate-spin h-8 w-8 text-green-500"
+                        className="animate-spin h-8 w-8 text-yellow-500"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -92,4 +89,4 @@ const AuthNaverCallback = () => {
     );
 };
 
-export default AuthNaverCallback;
+export default AuthKakaoCallback;

@@ -3,6 +3,7 @@ import { apiClient } from '../../api';
 import type { User, LoginPayload } from '../../api/services/auth/types/types';
 
 const initialState: User = {
+    id: null,
     name: '',
     email: '',
     profileImageUrl: '',

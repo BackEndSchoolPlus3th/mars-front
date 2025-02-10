@@ -6,9 +6,15 @@ import { X } from 'lucide-react';
 
 interface SideContainerProps {
     selectedMenu: string;
+    onRestaurantSelect: (id: number) => void;
+    showRestaurantDetail: (show: boolean) => void;
 }
 
-const SidebarDetail: React.FC<SideContainerProps> = ({ selectedMenu }) => {
+const SidebarDetail: React.FC<SideContainerProps> = ({
+    selectedMenu,
+    onRestaurantSelect,
+    showRestaurantDetail,
+}) => {
     const [showList, setShowList] = useState(true);
 
     if (!showList) {
@@ -22,7 +28,9 @@ const SidebarDetail: React.FC<SideContainerProps> = ({ selectedMenu }) => {
     const renderContent = () => {
         switch (selectedMenu) {
             case 'search':
-                return <SidebarSearch />;
+                return (
+                    <SidebarSearch onRestaurantSelect={onRestaurantSelect} />
+                );
             case 'favorites':
                 return <SidebarFavorites />;
             case 'trending':

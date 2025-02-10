@@ -6,9 +6,14 @@ const RestaurantCard: React.FC<RestaurantProps> = ({
   name,
   details,
   averageRate,
+  onClick,
 }) => {
   return (
-    <div className="flex items-center p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer">
+    <div
+      className="flex items-center p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+      id={id.toString()}
+      onClick={() => onClick(id)}
+    >
       <div className="flex-1">
         <h4 className="font-medium text-gray-900 mb-1">{name}</h4>
         <p className="text-gray-500 text-sm mb-2">{details}</p>

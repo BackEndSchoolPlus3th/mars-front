@@ -30,6 +30,7 @@ export const AuthGoogle = () => {
             console.log('Google Login Response:', res.data);
 
             const user: User = {
+                id: res.data.authUser.id, // ✅ 유저 ID 추가
                 name: res.data.authUser.name,
                 email: res.data.authUser.email,
                 profileImageUrl: res.data.authUser.profileImageUrl,
@@ -46,6 +47,9 @@ export const AuthGoogle = () => {
                 accessToken: res.data.accessToken,
                 social,
             };
+            localStorage.setItem("user", JSON.stringify(user)); // ✅ localStorage에 저장
+            localStorage.setItem("accessToken", res.data.accessToken);
+            localStorage.setItem("social", JSON.stringify(social));
 
             handleLogin(loginPayload);
         } catch (error) {

@@ -32,6 +32,7 @@ const AuthNaverCallback = () => {
                     console.log('Naver Login Response:', response.data);
 
                     const user: User = {
+                        id: response.data.authUser.id,  // ✅ DB에서 가져온 id 값
                         name: response.data.authUser.name,
                         email: response.data.authUser.email,
                         profileImageUrl: response.data.authUser.profileImageUrl,

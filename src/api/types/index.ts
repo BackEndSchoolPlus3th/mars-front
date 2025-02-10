@@ -158,3 +158,37 @@ export interface Comment {
     username: string;
     createdAt: string;
 }
+
+
+// ✅ 추가된 타입 (RestaurantSummaryDTO 타입 확장)
+export interface RestaurantSummaryDTO {
+  id: number;
+  name: string;
+  contact: string;
+  details: string;
+  averageRate: number;
+  summarizedReview: string;
+  imageUrl: string;
+  categoryName: string;
+  menus: MenuDTO[];
+  businessHours: BusinessHourDTO[];
+}
+
+export interface MenuDTO {
+  name: string;
+  price: number;
+  imageUrl: string;
+}
+
+export interface BusinessHourDTO {
+  dayOfWeek: number;
+  openTime: string;
+  closeTime: string;
+}
+
+
+// ✅ 리뷰어 API 응답 타입
+export interface ReviewerResponse {
+  top: Reviewer[]; // 상위 3명의 리뷰어
+  others: Reviewer[]; // 나머지 리뷰어 목록
+}

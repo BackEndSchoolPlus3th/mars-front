@@ -1,126 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import RestaurantCard from '../../entity/card/RestaurantCard';
+import FavoriteCard from '../entity/card/FavoriteCard';
+import favoriteService from '../../../../../../api/services/favoriteService';
+import { FavoriteList } from '../entity/prop/FavoriteProps';
 
 const SidebarFavorites: React.FC = () => {
-    const [restaurantCards, setRestaurantCards] = useState([
-        {
-            id: 0,
-            name: 'test',
-            image: 'https://via.placeholder.com/300',
-            address: '서울시 강남구',
-            rating: 4.5,
-            reviewCount: 10,
-            price: 2000,
-        },
-    ]);
+    const [favorites, setFavorites] = useState<FavoriteList[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        setRestaurantCards([
-            {
-                id: 1,
-                name: '맛집1',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.5,
-                reviewCount: 10,
-                price: 2000,
-            },
-            {
-                id: 2,
-                name: '맛집2',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.3,
-                reviewCount: 15,
-                price: 3000,
-            },
-            {
-                id: 3,
-                name: '맛집3',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.1,
-                reviewCount: 20,
-                price: 4000,
-            },
-            {
-                id: 4,
-                name: '맛집4',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 3.9,
-                reviewCount: 25,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-        ]);
+        const fetchFavorites = async () => {
+            try {
+                setIsLoading(true);
+                const data = await favoriteService.getFavorites();
+                setFavorites(data || []);
+            } catch (error) {
+                console.error('Failed to fetch favorites:', error);
+                setFavorites([]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchFavorites();
     }, []);
+
+    if (isLoading) return <div>Loading...</div>;
+    if (!favorites || favorites.length === 0) return <div>No favorites found</div>;
+
     return (
-        <div className="flex flex-col w-full h-full">
-            <h1>Favorites</h1>
-            <div className="flex flex-col divide-y divide-gray-100 overflow-y-auto">
-                {restaurantCards?.map((restaurantCard) => (
-                    <RestaurantCard
-                        key={restaurantCard.id}
-                        image={restaurantCard.image}
-                        name={restaurantCard.name}
-                        address={restaurantCard.address}
-                        rating={restaurantCard.rating}
-                        reviewCount={restaurantCard.reviewCount}
-                        price={restaurantCard.price}
+        <div className="flex flex-col w-full h-full p-4">
+            <h1 className="text-xl font-bold mb-4">찜 리스트</h1>
+            <div className="flex flex-col space-y-4 overflow-y-auto">
+                {favorites.map((favorite) => (
+                    <FavoriteCard
+                        key={favorite.id}
+                        name={favorite.name}
+                        isPublic={favorite.isPublic}
+                        restaurants={favorite.restaurantLists}
                     />
                 ))}
             </div>

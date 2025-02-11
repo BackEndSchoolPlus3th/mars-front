@@ -28,6 +28,14 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
   } = useRestaurantDetail(restaurantId);
   const [activeTab, setActiveTab] = useState<"menu" | "reviews">("menu");
 
+  useEffect(() => {
+    const fetchFavoriteStatus = async () => {
+      const isFavorite = await favoriteService.isFavorite(restaurantId);
+      setIsLiked(isFavorite);
+    };
+    fetchFavoriteStatus();
+  }, [restaurantId]);
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error occurred: {error.message}</div>;
   if (!restaurant) return <div>Restaurant not found</div>;
@@ -47,14 +55,6 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
   if (!restaurant) {
     return <div>Restaurant not found</div>;
   }
-
-  useEffect(() => {
-    const fetchFavoriteStatus = async () => {
-      const isFavorite = await favoriteService.isFavorite(restaurantId);
-      setIsLiked(isFavorite);
-    };
-    fetchFavoriteStatus();
-  }, [restaurantId]);
 
   return (
     <div className="flex flex-col w-[360px] bg-white border-r border-gray-200 rounded-lg shadow-lg h-full">

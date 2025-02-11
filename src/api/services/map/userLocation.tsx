@@ -1,9 +1,9 @@
-import apiClient from '../../apiClient';
+import apiClient from "../../apiClient";
 
 export const userLocationService = {
-    async getUserLocation() {
-        apiClient.get('/api/v1/user/location').then((response) => {
-            return response.data.data.locationInfo.loc;
-        });
-    },
+  async getUserLocation() {
+    const response = await apiClient.get("/api/v1/user/location");
+    console.log("유저 위치 정보 응답: ", response.data);
+    return response.data;
+  },
 };

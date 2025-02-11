@@ -5,15 +5,23 @@ import { FavoriteList } from '../entity/prop/FavoriteProps';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../utils';
 
-const SidebarFavorites: React.FC = () => {
-    const user = useSelector((state: RootState) => state.user);
+interface SidebarFavoritesProps {
+    setSelectedRestaurant: (id: number) => void;
+    onShowRestaurantDetail: (show: boolean) => void;
+}
 
-    if (!user.isLoggedIn) return <div>로그인이 필요합니다</div>;
+const SidebarFavorites: React.FC<SidebarFavoritesProps> = ({
+    setSelectedRestaurant,
+    onShowRestaurantDetail,
+}) => {
+    const user = useSelector((state: RootState) => state.user);
 
     const [favorites, setFavorites] = useState<FavoriteList[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        if (!user.isLoggedIn) return;
+
         const fetchFavorites = async () => {
             try {
                 setIsLoading(true);
@@ -28,8 +36,9 @@ const SidebarFavorites: React.FC = () => {
         };
 
         fetchFavorites();
-    }, []);
+    }, [user.isLoggedIn]);
 
+    if (!user.isLoggedIn) return <div>로그인이 필요합니다</div>;
     if (isLoading) return <div>Loading...</div>;
     if (!favorites || favorites.length === 0)
         return <div>No favorites found</div>;
@@ -44,6 +53,8 @@ const SidebarFavorites: React.FC = () => {
                         name={favorite.name}
                         isPublic={favorite.isPublic}
                         restaurants={favorite.restaurantLists}
+                        setSelectedRestaurant={setSelectedRestaurant}
+                        showRestaurantDetail={onShowRestaurantDetail}
                     />
                 ))}
             </div>

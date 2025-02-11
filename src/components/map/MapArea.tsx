@@ -1,33 +1,56 @@
-import React from 'react';
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import {
+    APIProvider,
+    type MapCameraChangedEvent,
+    Marker,
+    Map as ReactGoogleMaps,
+} from '@vis.gl/react-google-maps';
+import { useCallback, useState } from 'react';
+import { useGeolocation } from '../../hooks/location/useGeolocation';
 
 const MapArea: React.FC = () => {
+    // const { currentLocation, isNotSupportedGeolocation, isNotHasPermission } =
+    //     useGeolocation();
+    const GOOGLE_MAP_API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
+
+    const [currentCenter, setCurrentCenter] = useState({
+        lat: 37.5665,
+        lng: 126.978,
+    });
+
     const containerStyle = {
         width: '100%',
         height: '100%',
     };
 
-    const defaultCenter = {
-        lat: 37.5665,
-        lng: 126.978,
-    };
+    const handleCenterChanged = useCallback((event: MapCameraChangedEvent) => {
+        setCurrentCenter(event.detail.center);
+    }, []);
 
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API_KEY as string,
-    });
+    // if (!isNotSupportedGeolocation && !isNotHasPermission) {
+    //     setCurrentCenter({
+    //         lat: currentLocation.latitude,
+    //         lng: currentLocation.longitude,
+    //     });
+    // }
 
-    if (!isLoaded) return <div>Loading...</div>;
     return (
         <div className="h-full w-full">
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={defaultCenter}
-                zoom={12}
-            >
-                {/* 마커를 중심 좌표에 표시 */}
-                <Marker position={defaultCenter} />
-            </GoogleMap>
+            <APIProvider apiKey={GOOGLE_MAP_API_KEY}>
+                <ReactGoogleMaps
+                    style={containerStyle}
+                    defaultCenter={currentCenter}
+                    defaultZoom={15}
+                    reuseMaps
+                    disableDefaultUI
+                    onCameraChanged={handleCenterChanged}
+                >
+                    <Marker
+                        key="marker"
+                        position={currentCenter}
+                        clickable={false}
+                    />
+                </ReactGoogleMaps>
+            </APIProvider>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SidebarSearch from '../search/contianer/SidebarSearch';
 import SidebarFavorites from '../favorites/container/SidebarFavorites';
 import SidebarTrending from '../trending/contianer/SidebarTrending';
@@ -31,9 +31,19 @@ const SidebarDetail: React.FC<SideContainerProps> = ({
                     />
                 );
             case 'favorites':
-                return <SidebarFavorites />;
+                return (
+                    <SidebarFavorites
+                        setSelectedRestaurant={setSelectedRestaurant}
+                        onShowRestaurantDetail={showRestaurantDetail}
+                    />
+                );
             case 'trending':
-                return <SidebarTrending />;
+                return (
+                    <SidebarTrending
+                        setSelectedRestaurant={setSelectedRestaurant}
+                        onShowRestaurantDetail={showRestaurantDetail}
+                    />
+                );
             default:
                 return null;
         }

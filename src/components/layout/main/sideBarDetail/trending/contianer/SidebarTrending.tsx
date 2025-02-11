@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import RestaurantCard from '../../search/entity/card/RestaurantCard';
 
-const SidebarTrending: React.FC = () => {
+interface SidebarTrendingProps {
+    setSelectedRestaurant: (id: number) => void;
+    onShowRestaurantDetail: (show: boolean) => void;
+}
+
+const SidebarTrending: React.FC<SidebarTrendingProps> = ({
+    setSelectedRestaurant,
+    onShowRestaurantDetail,
+}) => {
     const [restaurantCards, setRestaurantCards] = useState([
         {
             id: 0,
             name: 'test',
-            image: 'https://via.placeholder.com/300',
-            address: '서울시 강남구',
-            rating: 4.5,
-            reviewCount: 10,
-            price: 2000,
+            details: 'https://via.placeholder.com/300',
+            averageRate: 4.5,
         },
     ]);
 
@@ -18,93 +23,39 @@ const SidebarTrending: React.FC = () => {
         setRestaurantCards([
             {
                 id: 1,
-                name: '맛집1',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.5,
-                reviewCount: 10,
-                price: 2000,
+                name: '롯데리아',
+                details: '롯데리아의 맛있는 햄버거',
+                averageRate: 4.5,
             },
             {
                 id: 2,
-                name: '맛집2',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.3,
-                reviewCount: 15,
-                price: 3000,
+                name: '맥도날드',
+                details: '맥도날드의 맛있는 햄버거',
+                averageRate: 4.5,
             },
             {
                 id: 3,
-                name: '맛집3',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.1,
-                reviewCount: 20,
-                price: 4000,
+                name: '버거킹',
+                details: '버거킹의 맛있는 햄버거',
+                averageRate: 4.5,
             },
             {
                 id: 4,
-                name: '맛집4',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 3.9,
-                reviewCount: 25,
-                price: 4000,
+                name: 'KFC',
+                details: 'KFC의 맛있는 치킨',
+                averageRate: 4.5,
             },
             {
                 id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
+                name: '파파존스',
+                details: '파파존스의 맛있는 피자',
+                averageRate: 4.5,
             },
             {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
-            },
-            {
-                id: 5,
-                name: '맛집5',
-                image: 'https://via.placeholder.com/300',
-                address: '서울시 강남구',
-                rating: 4.7,
-                reviewCount: 30,
-                price: 4000,
+                id: 6,
+                name: '도미노피자',
+                details: '도미노피자의 맛있는 피자',
+                averageRate: 4.5,
             },
         ]);
     }, []);
@@ -115,12 +66,12 @@ const SidebarTrending: React.FC = () => {
                 {restaurantCards?.map((restaurantCard) => (
                     <RestaurantCard
                         key={restaurantCard.id}
-                        image={restaurantCard.image}
                         name={restaurantCard.name}
-                        address={restaurantCard.address}
-                        rating={restaurantCard.rating}
-                        reviewCount={restaurantCard.reviewCount}
-                        price={restaurantCard.price}
+                        id={restaurantCard.id}
+                        details={restaurantCard.details}
+                        averageRate={restaurantCard.averageRate}
+                        setSelectedRestaurant={setSelectedRestaurant}
+                        showRestaurantDetail={onShowRestaurantDetail}
                     />
                 ))}
             </div>

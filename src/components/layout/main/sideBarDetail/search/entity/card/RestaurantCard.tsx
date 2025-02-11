@@ -1,8 +1,5 @@
 import React from "react";
 import RestaurantProps from "../prop/RestaurantProps";
-import { Heart, HeartOff } from "lucide-react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../../../utils";
 
 const RestaurantCard: React.FC<RestaurantProps> = ({
   id,
@@ -12,20 +9,10 @@ const RestaurantCard: React.FC<RestaurantProps> = ({
   setSelectedRestaurant,
   showRestaurantDetail,
 }) => {
-  const user = useSelector((state: RootState) => state.user);
-  const [isLiked, setIsLiked] = React.useState(false);
-
   const handleClick = (id: number) => {
     setSelectedRestaurant(id);
     showRestaurantDetail(true);
   };
-
-  const handleLikeClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsLiked(!isLiked);
-  };
-
-  const fetchFavorite = () => {};
 
   return (
     <div
@@ -39,13 +26,6 @@ const RestaurantCard: React.FC<RestaurantProps> = ({
           <span className="text-orange-500">⭐ {averageRate.toFixed(1)}</span>
         </div>
       </div>
-      {user.isLoggedIn ? (
-        <button onClick={fetchFavorite}>
-          <Heart color="red" fill="none" />
-        </button>
-      ) : (
-        <HeartOff color="gray" fill="none" />
-      )}
     </div>
   );
 };

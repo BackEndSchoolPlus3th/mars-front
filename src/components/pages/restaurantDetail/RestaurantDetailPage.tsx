@@ -17,7 +17,7 @@ export default function RestaurantDetailPage() {
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-4">{restaurant.name}</h1>
             <img
-                src={restaurant.image}
+                src={restaurant.imageUrl}
                 alt={restaurant.name}
                 className="w-full h-64 object-cover mb-4 rounded-lg shadow-md"
             />

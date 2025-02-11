@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RestaurantCard from '../../entity/card/RestaurantCard';
+import RestaurantCard from '../../search/entity/card/RestaurantCard';
 
 const SidebarTrending: React.FC = () => {
     const [restaurantCards, setRestaurantCards] = useState([
@@ -110,9 +110,8 @@ const SidebarTrending: React.FC = () => {
     }, []);
 
     return (
-        <div className="flex flex-col w-full h-full">
-            <h1>Favorites</h1>
-            <div className="divide-y divide-gray-100">
+        <div className="flex flex-col w-full h-full max-h-full">
+            <div className="divide-y divide-gray-100 overflow-y-auto max-h-190">
                 {restaurantCards?.map((restaurantCard) => (
                     <RestaurantCard
                         key={restaurantCard.id}

@@ -17,6 +17,7 @@ import {
   PopularReviewersPage,
   RecommendedRestaurantsPage,
   AuthNaverCallback,
+  AuthKakaoCallback,
 } from "./components/pages";
 
 function App() {
@@ -29,9 +30,7 @@ function App() {
             <div className="h-full page-container">
               <Routes>
                 <Route path="/" element={<MainPage />} />
-                <Route
-                  path="/recommendations"
-                  element={<RecommendedRestaurantsPage />}
+                <Route path="/recommendations" element={<RecommendedRestaurantsPage />}
                 />
                 {/* <Route
                                     path="/map"
@@ -46,11 +45,8 @@ function App() {
                 <Route path="/community/writeForm" element={<WriteForm />} />
                 <Route path="/community/:id" element={<PostDetail />} />
                 <Route path="/reviewers" element={<PopularReviewersPage />} />
-                <Route path="/restaurant/:id" element={<RestaurantDetail />} />
-                <Route
-                  path="/auth/naver/callback"
-                  element={<AuthNaverCallback />}
-                />
+                <Route path="/auth/naver/callback" element={<AuthNaverCallback />} />
+                <Route path="/auth/kakao/login" element={<AuthKakaoCallback />} />
               </Routes>
             </div>
           </div>

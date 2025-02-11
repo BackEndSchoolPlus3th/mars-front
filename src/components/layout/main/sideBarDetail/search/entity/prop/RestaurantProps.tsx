@@ -1,6 +1,8 @@
 export default interface RestaurantProps {
-  id: string;
-  name: string;
-  details: string;
-  averageRate: number;
+    id: number;
+    name: string;
+    details: string;
+    averageRate: number;
+    setSelectedRestaurant: (id: number) => void;
+    showRestaurantDetail: (show: boolean) => void;
 }

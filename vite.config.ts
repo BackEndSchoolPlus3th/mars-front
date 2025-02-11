@@ -5,11 +5,11 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [react(), tailwindcss()],
     server: {
-        host: 'www.commars.whqtker.site',
+        host: 'www.dev.commars.whqtker.site',
         https: true,
         headers: {
             'Cross-Origin-Opener-Policy': 'unsafe-none',
             'Cross-Origin-Embedder-Policy': 'unsafe-none'
-        }
+        },
     }
 });

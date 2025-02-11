@@ -2,7 +2,7 @@ import { CredentialResponse } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
 import { apiClient } from '../../..';
 import { User, SocialState, LoginPayload } from '../types/types';
-import { login } from '../../..';
+import { login } from '../../../../utils';
 
 export const AuthGoogle = () => {
     const dispatch = useDispatch();

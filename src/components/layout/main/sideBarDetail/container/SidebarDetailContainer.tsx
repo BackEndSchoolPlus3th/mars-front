@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SidebarSearch from '../search/contianer/SideBarSearch';
 import SidebarFavorites from '../favorites/container/SideBarFavorites';
 import SidebarTrending from '../trending/contianer/SideBarTrending';
@@ -6,30 +6,29 @@ import { X } from 'lucide-react';
 
 interface SideContainerProps {
     selectedMenu: string;
-    onRestaurantSelect: (id: number) => void;
+    setSelectedRestaurant: (id: number) => void;
     showRestaurantDetail: (show: boolean) => void;
+    setShowSidebarDetail: (show: boolean) => void;
 }
 
 const SidebarDetail: React.FC<SideContainerProps> = ({
     selectedMenu,
-    onRestaurantSelect,
+    setSelectedRestaurant,
     showRestaurantDetail,
+    setShowSidebarDetail,
 }) => {
-    const [showList, setShowList] = useState(true);
-
-    if (!showList) {
-        return null;
-    }
-
     const handleClose = () => {
-        setShowList(false);
+        setShowSidebarDetail(false);
     };
 
     const renderContent = () => {
         switch (selectedMenu) {
             case 'search':
                 return (
-                    <SidebarSearch onRestaurantSelect={onRestaurantSelect} />
+                    <SidebarSearch
+                        setSelectedRestaurant={setSelectedRestaurant}
+                        onShowRestaurantDetail={showRestaurantDetail}
+                    />
                 );
             case 'favorites':
                 return <SidebarFavorites />;

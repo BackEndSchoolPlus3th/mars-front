@@ -1,37 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface RestaurantState {
-    restaurantId: number;
-    showDetail: boolean;
+export interface RestaurantSliceProps {
+    id: number;
+    showRestaurant: boolean;
 }
 
-const initialState: RestaurantState = {
-    restaurantId: 0,
-    showDetail: false,
+const initialState: RestaurantSliceProps = {
+    id: -1,
+    showRestaurant: false,
 };
 
-interface RestaurantPayload {
-    restaurantId: number;
-    showDetail: boolean;
-}
-
-const restaurantSlice = createSlice({
+const RestaurantSlice = createSlice({
     name: 'restaurant',
     initialState,
     reducers: {
-        setRestaurantId(state, action: PayloadAction<number>) {
-            state.restaurantId = action.payload;
+        selectRestaurant: (state, action: PayloadAction<number>) => {
+            state.id = action.payload;
+            state.showRestaurant = true;
         },
-        setShowDetail(state, action: PayloadAction<boolean>) {
-            state.showDetail = action.payload;
-        },
-        resetRestaurantState(state) {
-            state.restaurantId = initialState.restaurantId;
-            state.showDetail = initialState.showDetail;
+        closeRestaurant: (state) => {
+            state.id = -1;
+            state.showRestaurant = false;
         },
     },
 });
 
-export const { setRestaurantId, setShowDetail, resetRestaurantState } =
-    restaurantSlice.actions;
-export default restaurantSlice.reducer;
+export const { selectRestaurant, closeRestaurant } = RestaurantSlice.actions;
+export default RestaurantSlice.reducer;

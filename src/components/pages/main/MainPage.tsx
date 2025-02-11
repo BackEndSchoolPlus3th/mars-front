@@ -12,8 +12,10 @@ const MainPage = () => {
     const [selectedRestaurant, setSelectedRestaurant] = useState<number | null>(
         null,
     );
-    const [showDetail, setShowDetail] = useState<true | false>(false);
     const user = useSelector((state: RootState) => state.user);
+    const [showRestaurantDetail, setshowRestaurantDetail] =
+        useState<boolean>(false);
+    const [showSidebarDetail, setShowSidebarDetail] = useState<boolean>(true);
 
     const fetchRefreshToken = async () => {
         try {
@@ -34,23 +36,39 @@ const MainPage = () => {
         <div className="flex h-full relative">
             <div className="flex flex-raw w-full h-full">
                 <div className="sidebar-container h-full">
-                    <Sidebar onMenuSelect={setSelectedSideMenu} />
+                    <Sidebar
+                        onMenuSelect={setSelectedSideMenu}
+                        setShowSidebarDetail={setShowSidebarDetail}
+                        showSidebarDetail={showSidebarDetail}
+                    />
                 </div>
                 <div className="main-map-container max-w-full max-h-full w-full h-full relative">
                     <div className="absolute h-full z-10">
                         <div className="flex flex-raw h-full">
-                            <div className="flex h-full w-full z-10 p-4">
-                                <SidebarDetail
-                                    selectedMenu={selectedSideMenu}
-                                    onRestaurantSelect={setSelectedRestaurant}
-                                />
-                            </div>
-                            {showDetail && (
+                            {showSidebarDetail && (
+                                <div className="flex h-full w-full z-10 p-4">
+                                    <SidebarDetail
+                                        selectedMenu={selectedSideMenu}
+                                        setSelectedRestaurant={
+                                            setSelectedRestaurant
+                                        }
+                                        showRestaurantDetail={
+                                            setshowRestaurantDetail
+                                        }
+                                        setShowSidebarDetail={
+                                            setShowSidebarDetail
+                                        }
+                                    />
+                                </div>
+                            )}
+                            {showRestaurantDetail && (
                                 <div className="flex h-full w-full z-10 p-4">
                                     {selectedRestaurant && (
                                         <RestaurantDetailContainer
                                             restaurantId={selectedRestaurant}
-                                            showDetail={setShowDetail}
+                                            showRestaurantDetail={
+                                                setshowRestaurantDetail
+                                            }
                                         />
                                     )}
                                 </div>

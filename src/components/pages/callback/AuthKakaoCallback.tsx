@@ -1,22 +1,20 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-    apiClient,
-    login,
-    User,
-    SocialState,
-    LoginPayload,
-} from '../../../api';
+import { apiClient, User, SocialState, LoginPayload } from '../../../api';
+import { login } from '../../../utils';
 
 const AuthKakaoCallback = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = useCallback((loginPayload: LoginPayload) => {
-        dispatch(login(loginPayload));
-        navigate('/');
-    }, [dispatch, navigate]);
+    const handleLogin = useCallback(
+        (loginPayload: LoginPayload) => {
+            dispatch(login(loginPayload));
+            navigate('/');
+        },
+        [dispatch, navigate],
+    );
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -25,7 +23,10 @@ const AuthKakaoCallback = () => {
         if (code) {
             const getKakaoToken = async () => {
                 try {
-                    const response = await apiClient.post('/api/auth/login/kakao',{ code });
+                    const response = await apiClient.post(
+                        '/api/auth/login/kakao',
+                        { code },
+                    );
                     console.log('Kakao Login Response:', response.data);
 
                     const user: User = {

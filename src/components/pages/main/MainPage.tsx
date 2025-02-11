@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import MapArea from '../../map/MapArea';
+import MapArea from '../../map/map/MapArea';
 import Sidebar from '../../layout/main/sidebar/Sidebar';
 import SidebarDetail from '../../layout/main/sideBarDetail/container/SidebarDetailContainer';
 import RestaurantDetailContainer from '../../layout/main/restaurantDetail/container/MainRestaurantDetailContainer';

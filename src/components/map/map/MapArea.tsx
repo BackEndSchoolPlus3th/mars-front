@@ -5,7 +5,8 @@ import {
     Map as ReactGoogleMaps,
 } from '@vis.gl/react-google-maps';
 import { useCallback, useState } from 'react';
-import { useGeolocation } from '../../hooks/location/useGeolocation';
+import { useGeolocation } from '../../../hooks/location/useGeolocation';
+import './MapArea.css';
 
 const MapArea: React.FC = () => {
     const { currentLocation, isNotSupportedGeolocation, isNotHasPermission } =

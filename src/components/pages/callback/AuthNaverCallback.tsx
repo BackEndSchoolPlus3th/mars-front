@@ -1,22 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-    apiClient,
-    login,
-    User,
-    SocialState,
-    LoginPayload,
-} from '../../../api';
+import { apiClient, User, SocialState, LoginPayload } from '../../../api';
+import { login } from '../../../utils';
 
 const NaverCallback = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = (loginPayload: LoginPayload) => {
-        dispatch(login(loginPayload));
-        navigate('/');
-    };
+    const handleLogin = useCallback(
+        (loginPayload: LoginPayload) => {
+            dispatch(login(loginPayload));
+            navigate('/');
+        },
+        [dispatch, navigate],
+    );
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);

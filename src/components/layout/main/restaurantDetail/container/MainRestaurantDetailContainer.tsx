@@ -3,15 +3,18 @@ import { Star, MapPin, Phone, Clock, X } from 'lucide-react';
 import { useRestaurantDetail } from '../../../../../api/services/restaurantService';
 import MainRestaurantDetailMenu from '../component/MainRestaurantDetailMenu';
 import MainRestaurantDetailReview from '../component/MainRestaurantDetailReview';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../../utils';
+import { closeRestaurant } from '../../../../../utils/slice/restaurantSlice';
 
 interface RestaurantDetailContainerProps {
     restaurantId: number;
-    showDetail: (show: boolean) => void;
+    showRestaurantDetail: (show: boolean) => void;
 }
 
 const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
     restaurantId,
-    showDetail,
+    showRestaurantDetail,
 }) => {
     const {
         data: restaurant,
@@ -25,7 +28,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
     if (!restaurant) return <div>Restaurant not found</div>;
 
     const handleClose = () => {
-        showDetail(false);
+        showRestaurantDetail(false);
     };
 
     if (!restaurant) {

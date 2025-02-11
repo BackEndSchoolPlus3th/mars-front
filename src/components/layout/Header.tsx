@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
 import LoginModal from '../auth/LoginModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../utils';
-import { logout } from '../../api';
+import { RootState, logout } from '../../utils';
 
 const Header = () => {
     const dispatch = useDispatch();

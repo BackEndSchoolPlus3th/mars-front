@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RestaurantCard from '../../entity/card/RestaurantCard';
+import RestaurantCard from '../../search/entity/card/RestaurantCard';
 
 const SidebarTrending: React.FC = () => {
     const [restaurantCards, setRestaurantCards] = useState([

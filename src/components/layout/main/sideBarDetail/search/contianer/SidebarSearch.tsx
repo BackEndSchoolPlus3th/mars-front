@@ -43,8 +43,8 @@ const SidebarSearch: React.FC<SidebarSearchProps> = ({
                 setIsLoading(true);
                 try {
                     const data = await searchRestaurants(searchQuery);
-                    setRestaurants(data.data.restaurants);
                     console.log('검색 결과:', data);
+                    setRestaurants(data.restaurants);
                 } catch (error) {
                     console.error('검색 실패:', error);
                 } finally {

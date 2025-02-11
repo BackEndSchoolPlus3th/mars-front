@@ -5,7 +5,15 @@ import { FavoriteList } from '../entity/prop/FavoriteProps';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../utils';
 
-const SidebarFavorites: React.FC = () => {
+interface SidebarFavoritesProps {
+    setSelectedRestaurant: (id: number) => void;
+    onShowRestaurantDetail: (show: boolean) => void;
+}
+
+const SidebarFavorites: React.FC<SidebarFavoritesProps> = ({
+    setSelectedRestaurant,
+    onShowRestaurantDetail,
+}) => {
     const user = useSelector((state: RootState) => state.user);
 
     const [favorites, setFavorites] = useState<FavoriteList[]>([]);
@@ -45,6 +53,8 @@ const SidebarFavorites: React.FC = () => {
                         name={favorite.name}
                         isPublic={favorite.isPublic}
                         restaurants={favorite.restaurantLists}
+                        setSelectedRestaurant={setSelectedRestaurant}
+                        showRestaurantDetail={onShowRestaurantDetail}
                     />
                 ))}
             </div>

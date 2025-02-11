@@ -74,7 +74,7 @@ const SidebarSearch: React.FC<SidebarSearchProps> = ({
                     />
                 </div>
             </div>
-            <div className="divide-y divide-gray-100 overflow-y-auto">
+            <div className="divide-y divide-gray-100 max-h-170 overflow-y-auto">
                 {isLoading ? (
                     <div className="p-4 text-center">로딩 중...</div>
                 ) : restaurants.length > 0 ? (

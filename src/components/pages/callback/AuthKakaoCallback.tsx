@@ -30,6 +30,7 @@ const AuthKakaoCallback = () => {
                     console.log('Kakao Login Response:', response.data);
 
                     const user: User = {
+                        id: response.data.authUser.id,
                         name: response.data.authUser.name,
                         email: response.data.authUser.email,
                         profileImageUrl: response.data.authUser.profileImageUrl,

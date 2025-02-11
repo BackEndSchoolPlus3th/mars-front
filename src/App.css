@@ -1,99 +1,9 @@
-/* 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-h1 {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-h3 {
-  font-size: 1.25rem;
-  font-weight: medium;
-}
-
-.text-orange-500 {
-  color: #f97316;
-}
-
-.bg-white {
-  background-color: #ffffff; 
-}
-
-.shadow-md {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.hover\:shadow-lg:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.rounded-lg {
-  border-radius: 0.5rem; 
-}
-.p-4 {
-    padding: 1rem; 
-}
-
-.mb-4 {
-    margin-bottom: 1rem;
-}
-
-.text-gray-600 {
-    color: #4b5563;  
-}
-
-.text-gray-500 {
-    color: #6b7280;  
-}
-
-.border {
-    border: 1px solid #e5e7eb; 
-}
-
-.focus\:ring-2:focus {
-    ring-width: 2px; 
-}
-
-.fixed {
-    position: fixed;
-}
-
-.bottom-4 {
-    bottom: 1rem;
-}
-
-.right-4 {
-    right: 1rem;
-}
-
-.bg-orange-500 {
-    background-color: #f97316; 
-}
-
-.hover\:bg-orange-600:hover {
-    background-color: #ea580c; 
-}
-
-.transition-colors {
-    transition: background-color 0.3s ease; 
-}
-*/
 @import 'tailwindcss';
 
 html,
 body,
 :root {
     height: 100%;
-
     width: 100%;
 }
 

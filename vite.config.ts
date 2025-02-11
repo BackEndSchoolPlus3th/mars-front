@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [react(), tailwindcss()],
     server: {
+        host: 'www.commars.whqtker.site',
         https: true,
         headers: {
             'Cross-Origin-Opener-Policy': 'unsafe-none',

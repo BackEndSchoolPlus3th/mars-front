@@ -5,11 +5,11 @@ import {
     Map as ReactGoogleMaps,
 } from '@vis.gl/react-google-maps';
 import { useCallback, useState } from 'react';
-import { useGeolocation } from '../../hooks/location/useGeolocation';
+// import { useGeolocation } from '../../hooks/location/useGeolocation';
 
 const MapArea: React.FC = () => {
-    const { currentLocation, isNotSupportedGeolocation, isNotHasPermission } =
-        useGeolocation();
+    // const { currentLocation, isNotSupportedGeolocation, isNotHasPermission } =
+    //     useGeolocation();
     const GOOGLE_MAP_API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
 
     const [currentCenter, setCurrentCenter] = useState({
@@ -26,12 +26,12 @@ const MapArea: React.FC = () => {
         setCurrentCenter(event.detail.center);
     }, []);
 
-    if (!isNotSupportedGeolocation && !isNotHasPermission) {
-        setCurrentCenter({
-            lat: currentLocation.latitude,
-            lng: currentLocation.longitude,
-        });
-    }
+    // if (!isNotSupportedGeolocation && !isNotHasPermission) {
+    //     setCurrentCenter({
+    //         lat: currentLocation.latitude,
+    //         lng: currentLocation.longitude,
+    //     });
+    // }
 
     return (
         <div className="h-full w-full">

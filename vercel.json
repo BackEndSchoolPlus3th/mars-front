@@ -8,5 +8,16 @@
             "source": "/auth/kakao/login",
             "destination": "/index.html"
         }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "https://commars.whqtker.site, https://dev.commars.whqtker.site"
+                }
+            ]
+        }
     ]
 }

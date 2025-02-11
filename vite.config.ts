@@ -9,7 +9,7 @@ export default defineConfig({
         https: true,
         headers: {
             'Cross-Origin-Opener-Policy': 'unsafe-none',
-            'Cross-Origin-Embedder-Policy': 'unsafe-none'
-        }
-    }
+            'Cross-Origin-Embedder-Policy': 'unsafe-none',
+        },
+    },
 });

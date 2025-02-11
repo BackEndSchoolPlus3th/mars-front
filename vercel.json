@@ -1,8 +1,8 @@
 {
     "rewrites": [
-      {
-        "source": "/auth/naver/callback",
-        "destination": "/index.html"
-      }
+        {
+            "source": "/auth/naver/callback",
+            "destination": "/index.html"
+        }
     ]
-  }
+}

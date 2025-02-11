@@ -5,7 +5,7 @@ import MapArea from '../../map/MapArea';
 // import SideBar from '../../layout/main/sidebar/Sidebar';
 import { apiClient } from '../../../api';
 import Sidebar from '../../layout/main/sidebar/Sidebar';
-import SidebarDetail from '../../layout/main/sideBarDetail/container/SideBarDetailContainer';
+import SidebarDetail from '../../layout/main/sideBarDetail/container/SidebarDetailContainer';
 
 const MainPage = () => {
     const [selectedSideMenu, setSelectedSideMenu] = useState('search');

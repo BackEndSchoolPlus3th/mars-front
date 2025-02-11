@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import SidebarSearch from '../search/contianer/SideBarSearch';
-import SidebarFavorites from '../favorites/container/SideBarFavorites';
-import SidebarTrending from '../trending/contianer/SideBarTrending';
+import SidebarSearch from '../search/contianer/SidebarSearch';
+import SidebarFavorites from '../favorites/container/SidebarFavorites';
+import SidebarTrending from '../trending/contianer/SidebarTrending';
 import { X } from 'lucide-react';
 
 interface SideContainerProps {

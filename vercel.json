@@ -1,7 +1,7 @@
 {
     "rewrites": [
         {
-            "source": "/auth/naver/callback",
+            "source": ["/auth/naver/callback", "/auth/kakao/login"],
             "destination": "/index.html"
         }
     ]

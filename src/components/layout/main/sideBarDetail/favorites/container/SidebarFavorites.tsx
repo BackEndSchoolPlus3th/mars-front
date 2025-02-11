@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react';
 import FavoriteCard from '../entity/card/FavoriteCard';
 import favoriteService from '../../../../../../api/services/favoriteService';
 import { FavoriteList } from '../entity/prop/FavoriteProps';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../../utils';
 
 const SidebarFavorites: React.FC = () => {
+    const user = useSelector((state: RootState) => state.user);
+
+    if (!user.isLoggedIn) return <div>로그인이 필요합니다</div>;
+
     const [favorites, setFavorites] = useState<FavoriteList[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -25,7 +31,8 @@ const SidebarFavorites: React.FC = () => {
     }, []);
 
     if (isLoading) return <div>Loading...</div>;
-    if (!favorites || favorites.length === 0) return <div>No favorites found</div>;
+    if (!favorites || favorites.length === 0)
+        return <div>No favorites found</div>;
 
     return (
         <div className="flex flex-col w-full h-full p-4">

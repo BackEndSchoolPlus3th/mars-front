@@ -16,4 +16,11 @@ export const recommendedRestaurantsService = {
       params: { restaurantId },
     });
   },
+
+  // 유저 아닐 때: 랜덤 5개 식당 조회 (id 없이 요청)
+  async getNotUserRandomRestaurants(lat: number, lng: number): Promise<ApiResponse<{ restaurants: RestaurantSummaryDTO[] }>> {
+    return apiClient.get(`/api/v1/today-random/notuser/random`, {
+      params: { lat, lng },
+    });
+  },
 };

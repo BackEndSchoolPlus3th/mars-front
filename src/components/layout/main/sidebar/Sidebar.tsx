@@ -3,10 +3,15 @@ import { Search, Heart, TrendingUp } from 'lucide-react';
 
 interface SidebarProps {
     onMenuSelect: (menu: string) => void;
+    setShowSidebarDetail: (show: boolean) => void;
+    showSidebarDetail: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect }) => {
-    const [showList, setShowList] = useState(false);
+const Sidebar: React.FC<SidebarProps> = ({
+    onMenuSelect,
+    setShowSidebarDetail,
+    showSidebarDetail,
+}) => {
     const [listType, setListType] = useState<
         'search' | 'favorites' | 'trending'
     >('search');
@@ -18,10 +23,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect }) => {
                 onClick={() => {
                     onMenuSelect('search');
                     setListType('search');
-                    setShowList(true);
+                    setShowSidebarDetail(true);
                 }}
                 className={`w-14 h-14 mb-4 flex flex-col items-center justify-center rounded-lg transition-colors ${
-                    showList && listType === 'search'
+                    showSidebarDetail && listType === 'search'
                         ? 'bg-orange-50 text-orange-500'
                         : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                 }`}
@@ -33,11 +38,11 @@ const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect }) => {
             <button
                 onClick={() => {
                     onMenuSelect('favorites');
-                    setShowList(true);
+                    setShowSidebarDetail(true);
                     setListType('favorites');
                 }}
                 className={`w-14 h-14 mb-4 flex flex-col items-center justify-center rounded-lg transition-colors ${
-                    showList && listType === 'favorites'
+                    showSidebarDetail && listType === 'favorites'
                         ? 'bg-orange-50 text-orange-500'
                         : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                 }`}
@@ -49,11 +54,11 @@ const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect }) => {
             <button
                 onClick={() => {
                     onMenuSelect('trending');
-                    setShowList(true);
+                    setShowSidebarDetail(true);
                     setListType('trending');
                 }}
                 className={`w-14 h-14 flex flex-col items-center justify-center rounded-lg transition-colors ${
-                    showList && listType === 'trending'
+                    showSidebarDetail && listType === 'trending'
                         ? 'bg-orange-50 text-orange-500'
                         : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                 }`}

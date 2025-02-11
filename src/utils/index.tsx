@@ -37,3 +37,4 @@ export const getErrorMessage = (error: unknown): string => {
 };
 
 export type { RootState, AppDispatch } from './store/Store';
+export { login, logout } from './slice/UserSlice';

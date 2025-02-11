@@ -6,23 +6,30 @@ import { X } from 'lucide-react';
 
 interface SideContainerProps {
     selectedMenu: string;
+    setSelectedRestaurant: (id: number) => void;
+    showRestaurantDetail: (show: boolean) => void;
+    setShowSidebarDetail: (show: boolean) => void;
 }
 
-const SidebarDetail: React.FC<SideContainerProps> = ({ selectedMenu }) => {
-    const [showList, setShowList] = useState(true);
-
-    if (!showList) {
-        return null;
-    }
-
+const SidebarDetail: React.FC<SideContainerProps> = ({
+    selectedMenu,
+    setSelectedRestaurant,
+    showRestaurantDetail,
+    setShowSidebarDetail,
+}) => {
     const handleClose = () => {
-        setShowList(false);
+        setShowSidebarDetail(false);
     };
 
     const renderContent = () => {
         switch (selectedMenu) {
             case 'search':
-                return <SidebarSearch />;
+                return (
+                    <SidebarSearch
+                        setSelectedRestaurant={setSelectedRestaurant}
+                        onShowRestaurantDetail={showRestaurantDetail}
+                    />
+                );
             case 'favorites':
                 return <SidebarFavorites />;
             case 'trending':

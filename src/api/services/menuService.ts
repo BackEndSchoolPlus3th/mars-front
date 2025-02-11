@@ -7,8 +7,10 @@ export const useRestaurantMenu = (restaurantId: number) => {
     ["restaurantMenu", restaurantId],
     async () => {
       const response = await apiClient.get<ApiResponse<Menu[]>>(
-        `/api/v1/restaurant/${restaurantId}/menu`
+        `/api/v1/menu/showAllMenus`,
+        { params: { restaurant_id: restaurantId } }
       );
+      console.log("restaurantMenu", response.data.data);
       return response.data.data;
     },
     {

@@ -1,4 +1,5 @@
 export interface User {
+    id: number | null; // ✅ null 허용
     name: string;
     email: string;
     profileImageUrl: string;

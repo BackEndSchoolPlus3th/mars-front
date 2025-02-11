@@ -4,8 +4,9 @@ import {
     Marker,
     Map as ReactGoogleMaps,
 } from '@vis.gl/react-google-maps';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 // import { useGeolocation } from '../../hooks/location/useGeolocation';
+import { userLocationService } from '../../api/services/map/userLocation';
 
 const MapArea: React.FC = () => {
     // const { currentLocation, isNotSupportedGeolocation, isNotHasPermission } =
@@ -24,6 +25,11 @@ const MapArea: React.FC = () => {
 
     const handleCenterChanged = useCallback((event: MapCameraChangedEvent) => {
         setCurrentCenter(event.detail.center);
+    }, []);
+
+    useEffect(() => {
+        const location = userLocationService.getUserLocation();
+        console.log(location);
     }, []);
 
     // if (!isNotSupportedGeolocation && !isNotHasPermission) {

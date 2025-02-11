@@ -8,12 +8,12 @@ import { RootState } from '../../../../../../utils';
 const SidebarFavorites: React.FC = () => {
     const user = useSelector((state: RootState) => state.user);
 
-    if (!user.isLoggedIn) return <div>로그인이 필요합니다</div>;
-
     const [favorites, setFavorites] = useState<FavoriteList[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        if (!user.isLoggedIn) return;
+
         const fetchFavorites = async () => {
             try {
                 setIsLoading(true);
@@ -28,8 +28,9 @@ const SidebarFavorites: React.FC = () => {
         };
 
         fetchFavorites();
-    }, []);
+    }, [user.isLoggedIn]);
 
+    if (!user.isLoggedIn) return <div>로그인이 필요합니다</div>;
     if (isLoading) return <div>Loading...</div>;
     if (!favorites || favorites.length === 0)
         return <div>No favorites found</div>;

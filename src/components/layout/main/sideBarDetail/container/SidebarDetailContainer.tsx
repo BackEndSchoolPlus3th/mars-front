@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SidebarSearch from '../search/contianer/SidebarSearch';
 import SidebarFavorites from '../favorites/container/SidebarFavorites';
 import SidebarTrending from '../trending/contianer/SidebarTrending';

@@ -5,9 +5,9 @@ import type { RestaurantReviewAnalysisDTO } from "../types";
 
 export const recommendedRestaurantsService = {
   // 랜덤 5개 식당 조회: GET /api/v1/today-random/random
-  async getRandomRestaurants(lat: number, lng: number, id: number): Promise<ApiResponse<{ restaurants: RestaurantSummaryDTO[] }>> {
+  async getRandomRestaurants(lat: number, lng: number): Promise<ApiResponse<{ restaurants: RestaurantSummaryDTO[] }>> {
     return apiClient.get(`/api/v1/today-random/random`, {
-      params: { lat, lng, id },
+      params: { lat, lng},
     });
   },
 

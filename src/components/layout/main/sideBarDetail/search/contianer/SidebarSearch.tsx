@@ -26,7 +26,6 @@ const SidebarSearch: React.FC<SidebarSearchProps> = ({
             setIsLoading(true);
             try {
                 const data = await fetchRestaurants();
-                console.log('식당 데이터:', data);
                 setRestaurants(data);
             } catch (error) {
                 console.error('식당 데이터 로딩 실패:', error);

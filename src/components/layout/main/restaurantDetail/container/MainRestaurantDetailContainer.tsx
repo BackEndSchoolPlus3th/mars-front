@@ -178,13 +178,11 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                     </div>
                 </div>
             </div>
-            <div className="w-full">
-                {showAddFavorite && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t border-gray-200">
-                        <MainAddFavorite restaurantId={restaurantId} />
-                    </div>
-                )}
-            </div>
+            {showAddFavorite && (
+                <div className="absolute bottom-4 right-0 bg-white p-4 border-r border-gray-200 lounded-lg w-[360px]">
+                    <MainAddFavorite restaurantId={restaurantId} />
+                </div>
+            )}
         </div>
     );
 };

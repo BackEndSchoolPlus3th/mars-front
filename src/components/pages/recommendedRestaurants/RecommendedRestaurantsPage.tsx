@@ -74,8 +74,13 @@ const RecommendedRestaurantsPage = () => {
     getRandomRestaurantsHandler();
   }, [user]); // ✅ userId 변경될 때 다시 불러오기
 
+  // ✅ 리뷰 분석 페이지 이동
+  const goToReviewAnalysis = () => {
+    navigate("/review-analysis");
+  };
+
   if (!randomRestaurants || randomRestaurants.length === 0)
-    return <ErrorState message="오늘뭐먹지는 거리와 찜기반으로 찿기때문에 반드시 찜 식당을 추가해주세요." />;
+    return <ErrorState message="오늘뭐먹지는 거리와 찜기반으로 찾기때문에 반드시 찜 식당을 추가해주세요." />;
 
   return (
     <div className="flex">
@@ -101,6 +106,18 @@ const RecommendedRestaurantsPage = () => {
           >
             돌림판 🎡
           </button>
+
+          {/* 🔹 로그인한 경우에만 "리뷰 분석 맛집 찾기" 버튼 표시 */}
+  {isLoggedIn && (
+    <button
+      onClick={goToReviewAnalysis} // ✅ 리뷰 분석 페이지 이동 함수
+      className="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600"
+    >
+      리뷰 분석 맛집 찾기 📊
+    </button>
+  )}
+
+          
           <p>현재 로그인한 유저 ID: {user?.id || "비회원"}</p> {/* ✅ 유저 ID 없을 경우 "비회원" 표시 */}
 
         </div>

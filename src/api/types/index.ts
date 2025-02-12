@@ -192,3 +192,22 @@ export interface ReviewerResponse {
     top: Reviewer[]; // 상위 3명의 리뷰어
     others: Reviewer[]; // 나머지 리뷰어 목록
 }
+
+
+// ✅ RestaurantReviewAnalysisDTO 타입 추가
+export interface RestaurantReviewAnalysisDTO {
+    restaurantId: number;
+    restaurantName: string;
+    reviewCount: number;
+    averageRating: number;
+    weightedScore: number;
+    rank: number;
+    reviews: ReviewSummary[];
+}
+
+// ✅ ReviewSummary 타입 추가 (리뷰 내용 요약)
+export interface ReviewSummary {
+    name: string;
+    body: string;
+    rate: number;
+}

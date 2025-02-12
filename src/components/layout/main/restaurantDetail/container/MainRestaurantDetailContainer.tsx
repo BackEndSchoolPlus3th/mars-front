@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../utils';
 import MainAddFavorite from '../component/MainAddFavorite';
 import favoriteService from '../../../../../api/services/favoriteService';
+import MainAddReview from '../component/MainAddReview';
 
 interface RestaurantDetailContainerProps {
     restaurantId: number;
@@ -20,6 +21,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
     const user = useSelector((state: RootState) => state.user);
     const [isLiked, setIsLiked] = useState(false);
     const [showAddFavorite, setShowAddFavorite] = useState(false);
+    const [showAddReview, setShowAddReview] = useState(false);
 
     const {
         data: restaurant,
@@ -178,6 +180,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                             ) : (
                                 <MainRestaurantDetailReview
                                     restaurantReviews={restaurant.reviews}
+                                    showAddReview={setShowAddReview}
                                 />
                             )}
                         </div>
@@ -189,6 +192,14 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                     <MainAddFavorite
                         restaurantId={restaurantId}
                         showAddFavorite={setShowAddFavorite}
+                    />
+                </div>
+            )}
+            {showAddReview && (
+                <div className="absolute bottom-4 right-4 bg-white p-2 border-r border-gray-200 lounded-lg w-[360px]">
+                    <MainAddReview
+                        restaurantId={restaurantId}
+                        showAddReview={setShowAddReview}
                     />
                 </div>
             )}

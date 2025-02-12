@@ -8,6 +8,7 @@ import { RootState } from '../../../../../utils';
 import MainAddFavorite from '../component/MainAddFavorite';
 import favoriteService from '../../../../../api/services/favoriteService';
 import MainAddReview from '../component/MainAddReview';
+import { apiClient } from '../../../../../api';
 
 interface RestaurantDetailContainerProps {
     restaurantId: number;
@@ -30,12 +31,20 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
     } = useRestaurantDetail(restaurantId);
     const [activeTab, setActiveTab] = useState<'menu' | 'reviews'>('menu');
 
+    const fetchFavoriteCheck = async () => {
+        try {
+            const response = await apiClient.get('/api/v1/favorite/check', {
+                params: { restaurantId },
+            });
+            console.log('Favorite check:', response.data);
+            setIsLiked(response.data.isFavorite);
+        } catch (error) {
+            console.error('Error checking favorite:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchFavoriteStatus = async () => {
-            const isFavorite = await favoriteService.isFavorite(restaurantId);
-            setIsLiked(isFavorite);
-        };
-        fetchFavoriteStatus();
+        if (user.isLoggedIn) fetchFavoriteCheck();
     }, [restaurantId]);
 
     if (isLoading) return <div>Loading...</div>;
@@ -53,11 +62,6 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
         }
         setIsLiked(!isLiked);
     };
-
-    if (!restaurant) {
-        return <div>Restaurant not found</div>;
-    }
-    console.log(restaurant);
 
     return (
         <div className="flex flex-col w-[360px] bg-white border-r border-gray-200 rounded-lg shadow-lg h-full">

@@ -16,11 +16,12 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), tailwindcss()],
     server: {
-      host: 'www.commars.whqtker.site',
-      https: true,
-      headers: {
-        'Cross-Origin-Opener-Policy': 'unsafe-none',
-        'Cross-Origin-Embedder-Policy': 'unsafe-none',
+      proxy: {
+        '/api': {
+          target: 'https://api.commars.whqtker.site',
+          changeOrigin: true,
+          secure: false,
+        }
       }
     }
   }

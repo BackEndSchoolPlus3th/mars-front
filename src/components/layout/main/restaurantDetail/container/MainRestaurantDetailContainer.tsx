@@ -179,7 +179,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                 </div>
             </div>
             {showAddFavorite && (
-                <div className="absolute bottom-4 right-0 bg-white p-4 border-r border-gray-200 lounded-lg w-[360px]">
+                <div className="absolute bottom-4 right-4 bg-white p-2 border-r border-gray-200 lounded-lg w-[360px]">
                     <MainAddFavorite restaurantId={restaurantId} />
                 </div>
             )}

@@ -10,8 +10,7 @@ export interface RestaurantResponse {
 export const fetchRestaurants = async (): Promise<RestaurantResponse[]> => {
   try {
     const response = await apiClient.get<RestaurantResponse[]>(
-      //"/api/v1/restaurantsDoc/sort/rate"
-      "/api/v1/restaurant/"
+      "/api/v1/restaurantsDoc/sort/rate"
     );
     console.log("식당 데이터 조회:", response.data);
     return response.data;

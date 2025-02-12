@@ -21,6 +21,7 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
                 setIsLoading(true);
                 const data = await favoriteService.getFavorites();
                 setFavorites(data || []);
+                console.log('찜 리스트:', data);
             } catch (error) {
                 console.error('Failed to fetch favorites:', error);
                 setFavorites([]);

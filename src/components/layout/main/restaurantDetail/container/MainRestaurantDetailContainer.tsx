@@ -55,6 +55,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
     if (!restaurant) {
         return <div>Restaurant not found</div>;
     }
+    console.log(restaurant);
 
     return (
         <div className="flex flex-col w-[360px] bg-white border-r border-gray-200 rounded-lg shadow-lg h-full">

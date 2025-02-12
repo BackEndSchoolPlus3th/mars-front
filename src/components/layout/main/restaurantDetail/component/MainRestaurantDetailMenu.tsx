@@ -20,7 +20,9 @@ const MainRestaurantDetailMenu: React.FC<MainRestaurantDetailMenuProps> = ({
         <div className="space-y-4">
             <div className="space-y-2">
                 {menuList && menuList.length > 0 ? (
-                    menuList.map((menu) => <MenuCard menu={menu} />)
+                    menuList.map((menu) => (
+                        <MenuCard key={menu.id} menu={menu} />
+                    ))
                 ) : (
                     <div>메뉴 정보가 없습니다.</div>
                 )}

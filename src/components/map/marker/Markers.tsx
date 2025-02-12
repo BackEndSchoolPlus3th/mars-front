@@ -8,14 +8,24 @@ import {
 
 interface MarkerProps {
     restaurant: RestaurantDetail;
+    setSelectedRestaurant: (id: number) => void;
+    onShowRestaurantDetail: (show: boolean) => void;
 }
 
-const Markers: React.FC<MarkerProps> = ({ restaurant }) => {
+const Markers: React.FC<MarkerProps> = ({
+    restaurant,
+    setSelectedRestaurant,
+    onShowRestaurantDetail,
+}) => {
     const [markerRef, setMarkerRef] = useAdvancedMarkerRef();
     const [showWindow, setShowWindow] = useState<boolean>(false);
 
     const handleMarkerMouseOver = useCallback(() => setShowWindow(true), []);
     const handleMarkerMouseOut = useCallback(() => setShowWindow(false), []);
+    const handleMarkerClick = useCallback(() => {
+        setSelectedRestaurant(restaurant.id);
+        onShowRestaurantDetail(true);
+    }, []);
 
     return (
         <div>
@@ -25,6 +35,7 @@ const Markers: React.FC<MarkerProps> = ({ restaurant }) => {
                 ref={markerRef}
                 onMouseEnter={handleMarkerMouseOver}
                 onMouseLeave={handleMarkerMouseOut}
+                onClick={handleMarkerClick}
             />
             {showWindow && (
                 <InfoWindow

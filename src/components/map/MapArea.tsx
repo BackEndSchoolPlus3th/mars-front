@@ -8,14 +8,16 @@ import { userLocationService } from '../../api/services/map/userLocation';
 import { RestaurantDetail } from '../../api/types';
 import { apiClient } from '../../api';
 import Markers from './marker/Markers';
-import { useRestaurantDetail } from '../../api/services/restaurantService';
-import { data } from 'react-router-dom';
 
 interface MapAreaProps {
-    selectedRestaurant: number;
+    setSelectedRestaurant: (id: number) => void;
+    onShowRestaurantDetail: (show: boolean) => void;
 }
 
-const MapArea: React.FC<MapAreaProps> = ({ selectedRestaurant }) => {
+const MapArea: React.FC<MapAreaProps> = ({
+    setSelectedRestaurant,
+    onShowRestaurantDetail,
+}) => {
     const GOOGLE_MAP_API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
 
     const [restaurants, setRestaurants] = useState<RestaurantDetail[] | null>(
@@ -70,6 +72,8 @@ const MapArea: React.FC<MapAreaProps> = ({ selectedRestaurant }) => {
                             <Markers
                                 key={restaurant.id}
                                 restaurant={restaurant}
+                                setSelectedRestaurant={setSelectedRestaurant}
+                                onShowRestaurantDetail={onShowRestaurantDetail}
                             />
                         );
                     })}

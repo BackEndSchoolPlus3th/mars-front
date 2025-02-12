@@ -37,7 +37,7 @@ const RecommendedRestaurantsPage = () => {
         // 로그인한 유저
         response = await recommendedRestaurantsService.getRandomRestaurants(
           37.571731,
-          127.011069
+          127.011069,
         );
       } else {
         // 비로그인 유저

@@ -81,10 +81,10 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                     <div className="flex items-center text-sm text-gray-600 mb-3">
                         <span className="flex items-center text-orange-500">
                             <Star size={16} className="mr-1" />
-                            {restaurant.rating}
+                            {restaurant.averageRate.toFixed(1)}
                         </span>
                         <span className="mx-2">•</span>
-                        <span>리뷰 {restaurant.reviewCount}</span>
+                        <span>리뷰 {restaurant.reviews.length}</span>
                     </div>
 
                     <div className="space-y-3 text-sm pb-2">
@@ -100,7 +100,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                                 size={16}
                                 className="mr-2 mt-0.5 text-gray-400"
                             />
-                            <span>{restaurant.phone}</span>
+                            <span>{restaurant.contact}</span>
                         </div>
                         <div className="flex items-start">
                             <Clock
@@ -122,6 +122,11 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                                         -{' '}
                                         {restaurant.businessHours.breakTime.end}
                                     </p>
+                                )}
+                                {restaurant.runningState ? (
+                                    <p className="text-green-500">영업중</p>
+                                ) : (
+                                    <p className="text-red-500">영업종료</p>
                                 )}
                             </div>
                         </div>
@@ -167,11 +172,11 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                         <div className="p-4">
                             {activeTab === 'menu' ? (
                                 <MainRestaurantDetailMenu
-                                    restaurantId={restaurantId}
+                                    restaurantMenus={restaurant.restaurantMenus}
                                 />
                             ) : (
                                 <MainRestaurantDetailReview
-                                    restaurantId={restaurantId}
+                                    restaurantReviews={restaurant.reviews}
                                 />
                             )}
                         </div>
@@ -180,7 +185,10 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
             </div>
             {showAddFavorite && (
                 <div className="absolute bottom-4 right-4 bg-white p-2 border-r border-gray-200 lounded-lg w-[360px]">
-                    <MainAddFavorite restaurantId={restaurantId} />
+                    <MainAddFavorite
+                        restaurantId={restaurantId}
+                        showAddFavorite={setShowAddFavorite}
+                    />
                 </div>
             )}
         </div>

@@ -1,44 +1,26 @@
 import React, { useEffect } from 'react';
-import { useRestaurantMenu } from '../../../../../api/services/menuService';
 import MenuCard from '../card/MenuCard';
-import { apiClient } from '../../../../../api';
 
 interface MainRestaurantDetailMenuProps {
-    restaurantId: number;
+    restaurantMenus: { imageUrl: string; name: string; price: number }[];
 }
 
 const MainRestaurantDetailMenu: React.FC<MainRestaurantDetailMenuProps> = ({
-    restaurantId,
+    restaurantMenus,
 }) => {
-    const [menuList, setMenuList] = React.useState([]);
+    const [menuList, setMenuList] = React.useState<
+        { imageUrl: string; name: string; price: number }[]
+    >([]);
 
     useEffect(() => {
-        const fetchMenus = async () => {
-            try {
-                const response = await apiClient.get(
-                    `/api/v1/menu/showAllMenus`,
-                    {
-                        params: { restaurant_id: restaurantId },
-                    },
-                );
-                console.log('api menus', response.data.data.menus);
-                setMenuList(response.data.data.menus);
-                console.log('menuList: ', menuList);
-            } catch (error) {
-                console.error('Error fetching menus:', error);
-            }
-        };
-
-        fetchMenus();
-    }, [restaurantId]);
+        setMenuList(restaurantMenus);
+    }, [restaurantMenus]);
 
     return (
         <div className="space-y-4">
             <div className="space-y-2">
                 {menuList && menuList.length > 0 ? (
-                    menuList.map((menu) => (
-                        <MenuCard key={menu.id} menu={menu} />
-                    ))
+                    menuList.map((menu) => <MenuCard menu={menu} />)
                 ) : (
                     <div>메뉴 정보가 없습니다.</div>
                 )}

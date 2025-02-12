@@ -1,39 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRestaurantReviews } from '../../../../../api/services/restaurantService';
 import { Search } from 'lucide-react';
 import ReviewCard from '../card/ReviewCard';
 import { apiClient } from '../../../../../api';
 
 interface MainRestaurantDetailReviewProps {
-    restaurantId: number;
+    restaurantReviews: {
+        body: string;
+        rate: number;
+        reviewName: string;
+        userName: string;
+    }[];
 }
 
 const MainRestaurantDetailReview: React.FC<MainRestaurantDetailReviewProps> = ({
-    restaurantId,
+    restaurantReviews,
 }) => {
-    const [reviewList, setReviewList] = React.useState([]);
+    const [reviewList, setReviewList] = React.useState<
+        MainRestaurantDetailReviewProps['restaurantReviews']
+    >([]);
 
-    React.useEffect(() => {
-        const fetchReviews = async () => {
-            try {
-                const response = await apiClient.get(
-                    `/api/v1/review/showAllReviews`,
-                    {
-                        params: { restaurant_id: restaurantId },
-                    },
-                );
-                console.log('api reviews', response.data.data.reviews);
-                setReviewList(response.data.data.reviews);
-                console.log('reviewList: ', reviewList);
-            } catch (error) {
-                console.error('Error fetching reviews:', error);
-            }
-        };
-
-        fetchReviews();
-    }, [restaurantId]);
-
-    console.log('reviewList: ', reviewList);
+    useEffect(() => {
+        setReviewList(restaurantReviews);
+    }, [restaurantReviews]);
 
     return (
         <div className="space-y-4">

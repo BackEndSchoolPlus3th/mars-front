@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import favoriteService from '../../../../../api/services/favoriteService';
 import { FavoriteList } from '../../sideBarDetail/favorites/entity/prop/FavoriteProps';
+import { X } from 'lucide-react';
 
 interface MainAddFavoriteProps {
     restaurantId: number;
+    showAddFavorite: (show: boolean) => void;
 }
 
-const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({ restaurantId }) => {
+const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
+    restaurantId,
+    showAddFavorite,
+}) => {
     const [favorites, setFavorites] = useState<FavoriteList[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -49,8 +54,20 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({ restaurantId }) => {
         }
     };
 
+    const handleClose = () => {
+        showAddFavorite(false);
+    };
+
     return (
         <div className="flex flex-col w-full p-2">
+            <div className="flex justify-end">
+                <button
+                    onClick={() => handleClose()}
+                    className="p-1 hover:bg-gray-100 rounded-full transition-colors m-3"
+                >
+                    <X size={20} className="text-gray-500" />
+                </button>
+            </div>
             {favorites.length !== 0 ? (
                 favorites.map((favorite) => (
                     <div

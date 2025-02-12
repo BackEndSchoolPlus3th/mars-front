@@ -19,21 +19,22 @@ export interface RegisterRequest extends LoginRequest {
 export interface Restaurant {
     id: number;
     name: string;
+    details: string;
     address: string;
-    rating: number;
-    reviewCount: number;
+    averageRate: number;
     imageUrl: string;
-    price: string;
-    category: string;
-    priceRange: string;
+    categoryId: string;
+    lat: number;
+    lng: number;
+    runningState: string;
 }
 
 export interface RestaurantDetail extends Restaurant {
-    description: string;
-    phone: string;
-    businessHours: BusinessHours;
-    menu: Menu[];
+    contact: string;
+    businessHours: BusinessHours[];
+    restaurantMenus: Menu[];
     reviews: Review[];
+    summarizedReview: string;
 }
 
 export interface BusinessHours {
@@ -63,17 +64,6 @@ export interface Review {
     name: string;
     body: string;
     rate: number;
-    content: string;
-    rating: number;
-    images?: string[];
-    author: Author;
-    createdAt: string;
-}
-
-export interface Author {
-    id: number;
-    name: string;
-    profileImage?: string;
 }
 
 export interface RecommendedRestaurant {
@@ -192,7 +182,6 @@ export interface ReviewerResponse {
     top: Reviewer[]; // 상위 3명의 리뷰어
     others: Reviewer[]; // 나머지 리뷰어 목록
 }
-
 
 // ✅ RestaurantReviewAnalysisDTO 타입 추가
 export interface RestaurantReviewAnalysisDTO {

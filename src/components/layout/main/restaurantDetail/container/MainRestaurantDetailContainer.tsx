@@ -112,18 +112,21 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                             />
                             <div>
                                 <p>
-                                    {restaurant.businessHours.open} -{' '}
-                                    {restaurant.businessHours.close}
+                                    {restaurant.businessHours[0].open} -{' '}
+                                    {restaurant.businessHours[0].close}
                                 </p>
-                                {restaurant.businessHours.breakTime && (
+                                {restaurant.businessHours[0].breakTime && (
                                     <p className="text-orange-500">
                                         브레이크타임:{' '}
                                         {
-                                            restaurant.businessHours.breakTime
-                                                .start
+                                            restaurant.businessHours[0]
+                                                .breakTime.start
                                         }{' '}
                                         -{' '}
-                                        {restaurant.businessHours.breakTime.end}
+                                        {
+                                            restaurant.businessHours[0]
+                                                .breakTime.end
+                                        }
                                     </p>
                                 )}
                                 {restaurant.runningState ? (

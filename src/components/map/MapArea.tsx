@@ -1,23 +1,40 @@
+import { useCallback, useEffect, useState } from 'react';
 import {
     APIProvider,
     type MapCameraChangedEvent,
-    Marker,
-    Map as ReactGoogleMaps,
+    Map,
 } from '@vis.gl/react-google-maps';
-import { useCallback, useEffect, useState } from 'react';
 import { userLocationService } from '../../api/services/map/userLocation';
+import { RestaurantDetail } from '../../api/types';
+import { apiClient } from '../../api';
+import Markers from './marker/Markers';
+import { useRestaurantDetail } from '../../api/services/restaurantService';
+import { data } from 'react-router-dom';
 
-const MapArea: React.FC = () => {
+interface MapAreaProps {
+    selectedRestaurant: number;
+}
+
+const MapArea: React.FC<MapAreaProps> = ({ selectedRestaurant }) => {
     const GOOGLE_MAP_API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
 
+    const [restaurants, setRestaurants] = useState<RestaurantDetail[] | null>(
+        null,
+    );
     const [currentCenter, setCurrentCenter] = useState({
         lat: 37.5665,
         lng: 126.978,
     });
-
-    const containerStyle = {
-        width: '100%',
-        height: '100%',
+    const fetchRestaurantsData = async () => {
+        try {
+            const response = await apiClient.get<RestaurantDetail[]>(
+                '/api/v1/restaurant/',
+            );
+            console.log('맵 식당 데이터 조회:', response.data.data.restaurants);
+            setRestaurants(response.data.data.restaurants);
+        } catch (error) {
+            console.error('식당 데이터 조회 실패:', error);
+        }
     };
 
     const handleCenterChanged = useCallback((event: MapCameraChangedEvent) => {
@@ -33,25 +50,30 @@ const MapArea: React.FC = () => {
             });
         };
         fetchLocation();
+        fetchRestaurantsData();
     }, []);
 
     return (
         <div className="h-full w-full">
             <APIProvider apiKey={GOOGLE_MAP_API_KEY}>
-                <ReactGoogleMaps
-                    style={containerStyle}
+                <Map
+                    mapId={import.meta.env.VITE_GOOGLE_MAP_API_KEY}
+                    style={{ width: '100%', height: '100%' }}
                     center={currentCenter}
                     defaultZoom={15}
                     reuseMaps
                     disableDefaultUI
                     onCameraChanged={handleCenterChanged}
                 >
-                    <Marker
-                        key="marker"
-                        position={currentCenter}
-                        clickable={false}
-                    />
-                </ReactGoogleMaps>
+                    {restaurants?.map((restaurant) => {
+                        return (
+                            <Markers
+                                key={restaurant.id}
+                                restaurant={restaurant}
+                            />
+                        );
+                    })}
+                </Map>
             </APIProvider>
         </div>
     );

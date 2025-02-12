@@ -40,7 +40,7 @@ const MainRestaurantDetailReview: React.FC<MainRestaurantDetailReviewProps> = ({
             <div className="space-y-2">
                 {reviewList && reviewList.length > 0 ? (
                     reviewList.map((review) => (
-                        <ReviewCard review={review} key={review.id} />
+                        <ReviewCard restaurantReviews={review} />
                     ))
                 ) : (
                     <div>리뷰 정보가 없습니다.</div>

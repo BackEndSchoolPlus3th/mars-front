@@ -4,6 +4,7 @@ import Header from './components/layout/Header';
 import CommunityPage from './components/pages/community/CommunityPage';
 import WriteForm from './components/pages/community/WriteForm';
 import PostDetail from './components/pages/community/PostDetail';
+import ReviewAnalysispage from "./components/pages/recommendedRestaurants/ReviewAnalysisPage";
 import { store } from './utils/store/Store';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -41,7 +42,12 @@ function App() {
                                 <Route
                                     path="/community/:id"
                                     element={<PostDetail />}
+
                                 />
+
+                                <Route 
+                                path="/review-analysis" 
+                                element={<ReviewAnalysispage />} />
                                 <Route
                                     path="/reviewers"
                                     element={<PopularReviewersPage />}

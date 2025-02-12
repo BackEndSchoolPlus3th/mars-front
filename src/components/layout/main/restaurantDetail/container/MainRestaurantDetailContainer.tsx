@@ -176,7 +176,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                                 />
                             ) : (
                                 <MainRestaurantDetailReview
-                                    restaurantReviews={restaurant.reviews}
+                                    restaurantReviews={restaurant.reviews.rate}
                                 />
                             )}
                         </div>

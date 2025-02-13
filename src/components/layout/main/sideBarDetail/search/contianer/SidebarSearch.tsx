@@ -11,11 +11,13 @@ import {
 interface SidebarSearchProps {
     setSelectedRestaurant: (id: number) => void;
     onShowRestaurantDetail: (show: boolean) => void;
+    mapCenter: [number, number];
 }
 
 const SidebarSearch: React.FC<SidebarSearchProps> = ({
     setSelectedRestaurant,
     onShowRestaurantDetail,
+    mapCenter,
 }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [restaurants, setRestaurants] = useState<RestaurantResponse[]>([]);
@@ -42,7 +44,11 @@ const SidebarSearch: React.FC<SidebarSearchProps> = ({
             if (searchQuery.trim()) {
                 setIsLoading(true);
                 try {
-                    const data = await searchRestaurants(searchQuery);
+                    const data = await searchRestaurants(
+                        searchQuery,
+                        mapCenter[0],
+                        mapCenter[1],
+                    );
                     console.log('검색 결과:', data);
                     setRestaurants(data);
                 } catch (error) {
@@ -84,7 +90,7 @@ const SidebarSearch: React.FC<SidebarSearchProps> = ({
                             id={restaurant.id}
                             name={restaurant.name}
                             details={restaurant.details}
-                            averageRate={restaurant.averageRate}
+                            averageRate={restaurant.average_rate}
                             setSelectedRestaurant={setSelectedRestaurant}
                             showRestaurantDetail={onShowRestaurantDetail}
                         />

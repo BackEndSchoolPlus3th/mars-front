@@ -9,6 +9,7 @@ interface SideContainerProps {
     setSelectedRestaurant: (id: number) => void;
     showRestaurantDetail: (show: boolean) => void;
     setShowSidebarDetail: (show: boolean) => void;
+    mapCenter: [number, number];
 }
 
 const SidebarDetail: React.FC<SideContainerProps> = ({
@@ -16,6 +17,7 @@ const SidebarDetail: React.FC<SideContainerProps> = ({
     setSelectedRestaurant,
     showRestaurantDetail,
     setShowSidebarDetail,
+    mapCenter,
 }) => {
     const handleClose = () => {
         setShowSidebarDetail(false);
@@ -28,6 +30,7 @@ const SidebarDetail: React.FC<SideContainerProps> = ({
                     <SidebarSearch
                         setSelectedRestaurant={setSelectedRestaurant}
                         onShowRestaurantDetail={showRestaurantDetail}
+                        mapCenter={mapCenter}
                     />
                 );
             case 'favorites':

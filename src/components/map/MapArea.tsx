@@ -13,6 +13,7 @@ import { nearRestaurant } from '../../api/services/map/nearRestaurant';
 interface MapAreaProps {
     setSelectedRestaurant: (id: number) => void;
     onShowRestaurantDetail: (show: boolean) => void;
+    setMapCenter: (center: [number, number]) => void;
 }
 
 interface MarkerDetail {
@@ -28,6 +29,7 @@ interface MarkerDetail {
 const MapArea: React.FC<MapAreaProps> = ({
     setSelectedRestaurant,
     onShowRestaurantDetail,
+    setMapCenter,
 }) => {
     const GOOGLE_MAP_API_KEY = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
 
@@ -84,6 +86,7 @@ const MapArea: React.FC<MapAreaProps> = ({
         }
 
         setCurrentCenter(newCenter);
+        setMapCenter([newCenter.lat, newCenter.lng]);
     }, []);
 
     useEffect(() => {

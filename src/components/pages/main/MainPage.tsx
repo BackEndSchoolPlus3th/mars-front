@@ -17,6 +17,8 @@ const MainPage = () => {
         useState<boolean>(false);
     const [showSidebarDetail, setShowSidebarDetail] = useState<boolean>(true);
 
+    const [mapCenter, setMapCenter] = useState<[number, number]>([0, 0]);
+
     const fetchRefreshToken = async () => {
         try {
             const response = await apiClient.get('/api/jwt/refresh');
@@ -58,6 +60,7 @@ const MainPage = () => {
                                         setShowSidebarDetail={
                                             setShowSidebarDetail
                                         }
+                                        mapCenter={mapCenter}
                                     />
                                 </div>
                             )}
@@ -79,6 +82,7 @@ const MainPage = () => {
                         <MapArea
                             setSelectedRestaurant={setSelectedRestaurant}
                             onShowRestaurantDetail={setshowRestaurantDetail}
+                            setMapCenter={setMapCenter}
                         />
                     </div>
                 </div>

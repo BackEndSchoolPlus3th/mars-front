@@ -43,7 +43,6 @@ const MapArea: React.FC<MapAreaProps> = ({
         const response = await nearRestaurant(lat, lng, 2);
         console.log('주변 식당 데이터 조회:', response);
         setRestaurants(response);
-        console.log('저장된 데이터: ', restaurants);
     };
 
     const calculateDistance = (

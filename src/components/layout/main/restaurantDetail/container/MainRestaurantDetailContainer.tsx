@@ -60,7 +60,6 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
         if (user.isLoggedIn && !isLiked) {
             setShowAddFavorite(true);
         }
-        setIsLiked(!isLiked);
     };
 
     return (
@@ -142,9 +141,18 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                         </div>
                         <div className="flex items-start">
                             {user.isLoggedIn ? (
-                                <button onClick={handleLikeClick}>
-                                    <Heart color="red" fill="none" />
-                                </button>
+                                isLiked ? (
+                                    <>
+                                        <button onClick={handleLikeClick}>
+                                            <Heart color="red" fill="red" />
+                                        </button>
+                                        <p></p>
+                                    </>
+                                ) : (
+                                    <button onClick={handleLikeClick}>
+                                        <Heart color="red" fill="none" />
+                                    </button>
+                                )
                             ) : (
                                 <>
                                     <HeartOff color="gray" fill="none" />

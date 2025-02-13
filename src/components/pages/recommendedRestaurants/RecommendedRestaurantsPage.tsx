@@ -87,7 +87,7 @@ const RecommendedRestaurantsPage = () => {
                 lng: parseFloat(location.longitude),
             });
         };
-        fetchLocation();
+        //fetchLocation();
         getRandomRestaurantsHandler();
     }, [user]); // ✅ userId 변경될 때 다시 불러오기
 

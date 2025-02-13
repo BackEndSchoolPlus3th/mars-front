@@ -8,6 +8,7 @@ import { RootState } from '../../../../../utils';
 import MainAddFavorite from '../component/MainAddFavorite';
 import favoriteService from '../../../../../api/services/favoriteService';
 import MainAddReview from '../component/MainAddReview';
+import { apiClient } from '../../../../../api';
 
 interface RestaurantDetailContainerProps {
     restaurantId: number;
@@ -30,12 +31,20 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
     } = useRestaurantDetail(restaurantId);
     const [activeTab, setActiveTab] = useState<'menu' | 'reviews'>('menu');
 
+    const fetchFavoriteCheck = async () => {
+        try {
+            const response = await apiClient.get('/api/v1/favorite/check', {
+                params: { restaurantId },
+            });
+            console.log('Favorite check:', response.data);
+            setIsLiked(response.data.isFavorite);
+        } catch (error) {
+            console.error('Error checking favorite:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchFavoriteStatus = async () => {
-            const isFavorite = await favoriteService.isFavorite(restaurantId);
-            setIsLiked(isFavorite);
-        };
-        fetchFavoriteStatus();
+        if (user.isLoggedIn) fetchFavoriteCheck();
     }, [restaurantId]);
 
     if (isLoading) return <div>Loading...</div>;
@@ -51,13 +60,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
         if (user.isLoggedIn && !isLiked) {
             setShowAddFavorite(true);
         }
-        setIsLiked(!isLiked);
     };
-
-    if (!restaurant) {
-        return <div>Restaurant not found</div>;
-    }
-    console.log(restaurant);
 
     return (
         <div className="flex flex-col w-[360px] bg-white border-r border-gray-200 rounded-lg shadow-lg h-full">
@@ -112,18 +115,21 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                             />
                             <div>
                                 <p>
-                                    {restaurant.businessHours.open} -{' '}
-                                    {restaurant.businessHours.close}
+                                    {restaurant.businessHours[0].open} -{' '}
+                                    {restaurant.businessHours[0].close}
                                 </p>
-                                {restaurant.businessHours.breakTime && (
+                                {restaurant.businessHours[0].breakTime && (
                                     <p className="text-orange-500">
                                         브레이크타임:{' '}
                                         {
-                                            restaurant.businessHours.breakTime
-                                                .start
+                                            restaurant.businessHours[0]
+                                                .breakTime.start
                                         }{' '}
                                         -{' '}
-                                        {restaurant.businessHours.breakTime.end}
+                                        {
+                                            restaurant.businessHours[0]
+                                                .breakTime.end
+                                        }
                                     </p>
                                 )}
                                 {restaurant.runningState ? (
@@ -135,9 +141,18 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                         </div>
                         <div className="flex items-start">
                             {user.isLoggedIn ? (
-                                <button onClick={handleLikeClick}>
-                                    <Heart color="red" fill="none" />
-                                </button>
+                                isLiked ? (
+                                    <>
+                                        <button onClick={handleLikeClick}>
+                                            <Heart color="red" fill="red" />
+                                        </button>
+                                        <p></p>
+                                    </>
+                                ) : (
+                                    <button onClick={handleLikeClick}>
+                                        <Heart color="red" fill="none" />
+                                    </button>
+                                )
                             ) : (
                                 <>
                                     <HeartOff color="gray" fill="none" />

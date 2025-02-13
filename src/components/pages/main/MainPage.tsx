@@ -76,7 +76,10 @@ const MainPage = () => {
                         </div>
                     </div>
                     <div className="absolute w-full h-full z-0">
-                        <MapArea />
+                        <MapArea
+                            setSelectedRestaurant={setSelectedRestaurant}
+                            onShowRestaurantDetail={setshowRestaurantDetail}
+                        />
                     </div>
                 </div>
             </div>

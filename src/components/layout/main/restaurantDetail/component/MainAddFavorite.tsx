@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import favoriteService from "../../../../../api/services/favoriteService";
-import { FavoriteList } from "../../sideBarDetail/favorites/entity/prop/FavoriteProps";
-import { X, Trash } from "lucide-react"; // 🗑️ 삭제 아이콘 추가
+import React, { useEffect, useState } from 'react';
+import favoriteService from '../../../../../api/services/favoriteService';
+import { FavoriteList } from '../../sideBarDetail/favorites/entity/prop/FavoriteProps';
+import { X, Trash } from 'lucide-react'; // 🗑️ 삭제 아이콘 추가
 
 interface MainAddFavoriteProps {
     restaurantId: number; // 선택된 식당의 ID
@@ -13,7 +13,7 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
     showAddFavorite,
 }) => {
     const [favorites, setFavorites] = useState<FavoriteList[]>([]); // 찜 리스트 상태
-    const [newFavoriteName, setNewFavoriteName] = useState(""); // 새로운 찜 리스트 이름
+    const [newFavoriteName, setNewFavoriteName] = useState(''); // 새로운 찜 리스트 이름
     const [isPublic, setIsPublic] = useState(true); // 공개 여부 상태
     const [isLoading, setIsLoading] = useState(false); // 로딩 상태
 
@@ -28,7 +28,7 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
             const data = await favoriteService.getFavorites();
             setFavorites(data || []);
         } catch (error) {
-            console.error("❌ 찜 리스트 가져오기 실패:", error);
+            console.error('❌ 찜 리스트 가져오기 실패:', error);
             setFavorites([]);
         } finally {
             setIsLoading(false);
@@ -38,23 +38,28 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
     // 📌 새로운 찜 리스트 생성
     const createFavoriteList = async () => {
         if (!newFavoriteName.trim()) {
-            alert("찜 리스트 이름을 입력해주세요.");
+            alert('찜 리스트 이름을 입력해주세요.');
             return;
         }
 
         try {
             setIsLoading(true);
-            console.log("✅ 찜 리스트 생성 요청:", newFavoriteName, "공개 여부:", isPublic);
+            console.log(
+                '✅ 찜 리스트 생성 요청:',
+                newFavoriteName,
+                '공개 여부:',
+                isPublic,
+            );
 
             await favoriteService.createFavoriteList(newFavoriteName, isPublic);
 
             await new Promise((resolve) => setTimeout(resolve, 500)); // 서버 응답 대기
-            setNewFavoriteName(""); // 입력값 초기화
+            setNewFavoriteName(''); // 입력값 초기화
             setIsPublic(true);
             await fetchFavorites(); // 찜 리스트 다시 불러오기
         } catch (error) {
-            console.error("❌ 찜 리스트 생성 실패:", error);
-            alert("찜 리스트 생성에 실패했습니다.");
+            console.error('❌ 찜 리스트 생성 실패:', error);
+            alert('찜 리스트 생성에 실패했습니다.');
         } finally {
             setIsLoading(false);
         }
@@ -63,34 +68,44 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
     // 📌 찜 리스트에 식당 추가
     const fetchAddFavorite = async (favoriteId: number) => {
         try {
-            console.log(`✅ 찜 리스트(${favoriteId})에 식당(${restaurantId}) 추가 요청`);
-            await favoriteService.addRestaurantToFavorite(favoriteId, restaurantId);
+            console.log(
+                `✅ 찜 리스트(${favoriteId})에 식당(${restaurantId}) 추가 요청`,
+            );
+            await favoriteService.addRestaurantToFavorite(
+                favoriteId,
+                restaurantId,
+            );
 
             await new Promise((resolve) => setTimeout(resolve, 500));
-            alert("✅ 찜 리스트에 추가되었습니다!");
-            console.log("✅ 찜 리스트 생성 요청:", newFavoriteName, "공개 여부:", isPublic);
-
+            alert('✅ 찜 리스트에 추가되었습니다!');
+            console.log(
+                '✅ 찜 리스트 생성 요청:',
+                newFavoriteName,
+                '공개 여부:',
+                isPublic,
+            );
+            showAddFavorite(false);
             await fetchFavorites();
         } catch (error) {
-            console.error("❌ 찜 리스트 추가 실패:", error);
-            alert("찜 리스트 추가에 실패했습니다.");
+            console.error('❌ 찜 리스트 추가 실패:', error);
+            alert('찜 리스트 추가에 실패했습니다.');
         }
     };
 
     // 📌 찜 리스트 삭제
     const fetchDeleteFavorite = async (favoriteId: number) => {
-        if (!window.confirm("정말 삭제하시겠습니까?")) return;
+        if (!window.confirm('정말 삭제하시겠습니까?')) return;
 
         try {
             console.log(`🗑️ 찜 리스트(${favoriteId}) 삭제 요청`);
             await favoriteService.deleteFavorite(favoriteId);
 
             await new Promise((resolve) => setTimeout(resolve, 500));
-            alert("🗑️ 찜 리스트가 삭제되었습니다!");
+            alert('🗑️ 찜 리스트가 삭제되었습니다!');
             await fetchFavorites();
         } catch (error) {
-            console.error("❌ 찜 리스트 삭제 실패:", error);
-            alert("찜 리스트 삭제에 실패했습니다.");
+            console.error('❌ 찜 리스트 삭제 실패:', error);
+            alert('찜 리스트 삭제에 실패했습니다.');
         }
     };
 
@@ -122,10 +137,17 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
                                 key={favorite.id}
                                 className="p-2 border rounded-lg mb-4 flex justify-between items-center cursor-pointer hover:bg-gray-100 transition"
                             >
-                                <div onClick={() => fetchAddFavorite(favorite.id)}>
-                                    <h4 className="text-lg font-semibold">{favorite.name}</h4>
+                                <div
+                                    onClick={() =>
+                                        fetchAddFavorite(favorite.id)
+                                    }
+                                >
+                                    <h4 className="text-lg font-semibold">
+                                        {favorite.name}
+                                    </h4>
                                     <p className="text-sm text-gray-500">
-                                        {favorite.restaurantLists.length}개 저장됨
+                                        {favorite.restaurantLists.length}개
+                                        저장됨
                                     </p>
                                 </div>
 
@@ -166,7 +188,10 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
                         onChange={() => setIsPublic(!isPublic)}
                         className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
                     />
-                    <label htmlFor="isPublic" className="ml-2 text-sm text-gray-700">
+                    <label
+                        htmlFor="isPublic"
+                        className="ml-2 text-sm text-gray-700"
+                    >
                         공개 리스트로 설정
                     </label>
                 </div>

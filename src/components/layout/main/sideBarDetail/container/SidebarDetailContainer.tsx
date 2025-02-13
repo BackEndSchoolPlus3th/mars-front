@@ -60,12 +60,19 @@ const SidebarDetail: React.FC<SideContainerProps> = ({
                     {selectedMenu === 'favorites' && '찜한 맛집'}
                     {selectedMenu === 'trending' && '인기 맛집'}
                 </h3>
-                <button
-                    onClick={() => handleClose()}
-                    className="p-1 hover:bg-gray-100 rounded-full transition-colors"
-                >
-                    <X size={20} className="text-gray-500" />
-                </button>
+                <div className="flex flex-row items-center space-x-2">
+                    {selectedMenu === 'favorites' && (
+                        <button className="flex items-center justify-center space-x-2 px-4 py-2 rounded-md border border-orange-500 text-orange-500 hover:bg-orange-50 font-medium transition-colors w-full text-center">
+                            찜 목록 삭제
+                        </button>
+                    )}
+                    <button
+                        onClick={() => handleClose()}
+                        className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                    >
+                        <X size={20} className="text-gray-500" />
+                    </button>
+                </div>
             </div>
             <div className="p-4 max-h-full h-full">{renderContent()}</div>
         </div>

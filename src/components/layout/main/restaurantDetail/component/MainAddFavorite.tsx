@@ -53,7 +53,6 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
 
             await favoriteService.createFavoriteList(newFavoriteName, isPublic);
 
-            await new Promise((resolve) => setTimeout(resolve, 500)); // 서버 응답 대기
             setNewFavoriteName(''); // 입력값 초기화
             setIsPublic(true);
             await fetchFavorites(); // 찜 리스트 다시 불러오기
@@ -76,7 +75,6 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
                 restaurantId,
             );
 
-            await new Promise((resolve) => setTimeout(resolve, 500));
             alert('✅ 찜 리스트에 추가되었습니다!');
             console.log(
                 '✅ 찜 리스트 생성 요청:',
@@ -100,7 +98,6 @@ const MainAddFavorite: React.FC<MainAddFavoriteProps> = ({
             console.log(`🗑️ 찜 리스트(${favoriteId}) 삭제 요청`);
             await favoriteService.deleteFavorite(favoriteId);
 
-            await new Promise((resolve) => setTimeout(resolve, 500));
             alert('🗑️ 찜 리스트가 삭제되었습니다!');
             await fetchFavorites();
         } catch (error) {

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Star, X } from 'lucide-react';
+import axios from 'axios';
+import { apiClient } from '../../../../../api';
 
 interface MainAddReviewProps {
     restaurantId: number;
@@ -48,10 +50,31 @@ const MainAddReview: React.FC<MainAddReviewProps> = ({
     const handleSubmit = async () => {
         try {
             // 리뷰 저장 API 호출
+            // 백엔드의 ReviewWriteRequest DTO와 일치하는 JSON 데이터 생성
+            const payload = {
+                restaurant_id: restaurantId,
+                name: name,
+                rate: rate,
+                body: body,
+            };
 
+            const response = await apiClient.post(
+                'api/v1/review/writeReview',
+                payload,
+            );
+
+            console.log('리뷰 등록 성공: ', response.data);
+
+            // console.log('리뷰 등록 성공: ', response.data);
             showAddReview(false);
         } catch (error) {
-            console.error('Failed to create review:', error);
+            if (axios.isAxiosError(error)) {
+                console.error('AxiosError:', error.message);
+                console.error('Response status:', error.response?.status);
+                console.error('Response data:', error.response?.data);
+            } else {
+                console.error('Unexpected error:', error);
+            }
         }
     };
 

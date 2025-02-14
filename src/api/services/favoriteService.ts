@@ -24,14 +24,12 @@ export const favoriteService = {
   },
 
   // Add a restaurant to a specific favorite list
-  addRestaurantToFavorite: async (
-    favoriteId: number,
-    restaurantId: number
-  ): Promise<void> => {
-    await apiClient.post(`/api/v1/favorite/${favoriteId}/restaurant`, {
-      restaurantId,
-    });
-  },
+  addRestaurantToFavorite: async (favoriteId: number, restaurantId: number): Promise<void> => {
+    const requestBody = { restaurantId: Number(restaurantId) };  // ✅ 숫자로 변환하여 전송
+    await apiClient.post(`/api/v1/favorite/${favoriteId}/restaurant`, requestBody);
+},
+
+
 
   // Create a new favorite list
   createFavoriteList: async (name: string, isPublic: boolean): Promise<void> => {
@@ -53,6 +51,8 @@ export const favoriteService = {
   deleteFavorite: async (favoriteId: number): Promise<void> => {
     await apiClient.delete(`/api/v1/favorite/${favoriteId}`);
   },
+
+  
 };
 
 export default favoriteService;

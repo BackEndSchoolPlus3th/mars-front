@@ -45,7 +45,6 @@ const SidebarFavorites: React.FC<SidebarFavoritesProps> = ({
 
     return (
         <div className="flex flex-col w-full h-full p-4">
-            <h1 className="text-xl font-bold mb-4">찜 리스트</h1>
             <div className="flex flex-col space-y-4 overflow-y-auto">
                 {favorites.map((favorite) => (
                     <FavoriteCard

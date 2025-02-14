@@ -8,6 +8,7 @@ import { RootState } from '../../../../../utils';
 import MainAddFavorite from '../component/MainAddFavorite';
 import favoriteService from '../../../../../api/services/favoriteService';
 import MainAddReview from '../component/MainAddReview';
+import { apiClient } from '../../../../../api';
 
 interface RestaurantDetailContainerProps {
     restaurantId: number;
@@ -19,7 +20,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
     showRestaurantDetail,
 }) => {
     const user = useSelector((state: RootState) => state.user);
-    const [isLiked, setIsLiked] = useState(false);
+    const [favoriteId, setFavoriteID] = useState<number | null>(null);
     const [showAddFavorite, setShowAddFavorite] = useState(false);
     const [showAddReview, setShowAddReview] = useState(false);
 
@@ -30,12 +31,32 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
     } = useRestaurantDetail(restaurantId);
     const [activeTab, setActiveTab] = useState<'menu' | 'reviews'>('menu');
 
+    const fetchFavoriteCheck = async () => {
+        try {
+            const response = await apiClient.get('/api/v1/favorite/check', {
+                params: { restaurantId },
+            });
+            console.log('Favorite check:', response.data);
+            setFavoriteID(response.data.isFavorite);
+        } catch (error) {
+            console.error('Error checking favorite:', error);
+        }
+    };
+
+    const fetchDeleteFavorite = async () => {
+        try {
+            await apiClient.post('/api/v1/favorite/delete/restaurant', {
+                favoriteId,
+                restaurantId,
+            });
+            setFavoriteID(null);
+        } catch (error) {
+            console.error('Error canceling favorite:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchFavoriteStatus = async () => {
-            const isFavorite = await favoriteService.isFavorite(restaurantId);
-            setIsLiked(isFavorite);
-        };
-        fetchFavoriteStatus();
+        if (user.isLoggedIn) fetchFavoriteCheck();
     }, [restaurantId]);
 
     if (isLoading) return <div>Loading...</div>;
@@ -48,33 +69,34 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
 
     const handleLikeClick = (e: React.MouseEvent) => {
         e.stopPropagation();
-        if (user.isLoggedIn && !isLiked) {
+        if (user.isLoggedIn && favoriteId == null) {
             setShowAddFavorite(true);
         }
-        setIsLiked(!isLiked);
     };
 
-    if (!restaurant) {
-        return <div>Restaurant not found</div>;
-    }
-    console.log(restaurant);
+    const handleFavoriteCancel = (e: React.MouseEvent) => {
+        fetchDeleteFavorite();
+
+        e.stopPropagation();
+        setShowAddFavorite(false);
+    };
 
     return (
         <div className="flex flex-col w-[360px] bg-white border-r border-gray-200 rounded-lg shadow-lg h-full">
             <div className="relative h-64">
-                <div className="flex justify-end">
+                <img
+                    src={restaurant.imageUrl}
+                    alt={restaurant.name}
+                    className="absolute w-full h-full object-cover rounded-t-lg"
+                />
+                <div className="absolute flex justify-end w-full">
                     <button
                         onClick={() => handleClose()}
-                        className="p-1 hover:bg-gray-100 rounded-full transition-colors m-3"
+                        className="p-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors m-3"
                     >
                         <X size={20} className="text-gray-500" />
                     </button>
                 </div>
-                <img
-                    src={restaurant.imageUrl}
-                    alt={restaurant.name}
-                    className="w-full h-full object-cover"
-                />
             </div>
             <div className="flex-1 overflow-y-auto">
                 <div className="p-4">
@@ -112,18 +134,21 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                             />
                             <div>
                                 <p>
-                                    {restaurant.businessHours.open} -{' '}
-                                    {restaurant.businessHours.close}
+                                    {restaurant.businessHours[0].open} -{' '}
+                                    {restaurant.businessHours[0].close}
                                 </p>
-                                {restaurant.businessHours.breakTime && (
+                                {restaurant.businessHours[0].breakTime && (
                                     <p className="text-orange-500">
                                         브레이크타임:{' '}
                                         {
-                                            restaurant.businessHours.breakTime
-                                                .start
+                                            restaurant.businessHours[0]
+                                                .breakTime.start
                                         }{' '}
                                         -{' '}
-                                        {restaurant.businessHours.breakTime.end}
+                                        {
+                                            restaurant.businessHours[0]
+                                                .breakTime.end
+                                        }
                                     </p>
                                 )}
                                 {restaurant.runningState ? (
@@ -135,9 +160,15 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                         </div>
                         <div className="flex items-start">
                             {user.isLoggedIn ? (
-                                <button onClick={handleLikeClick}>
-                                    <Heart color="red" fill="none" />
-                                </button>
+                                favoriteId != null ? (
+                                    <button onClick={handleFavoriteCancel}>
+                                        <Heart color="red" fill="red" />
+                                    </button>
+                                ) : (
+                                    <button onClick={handleLikeClick}>
+                                        <Heart color="red" fill="none" />
+                                    </button>
+                                )
                             ) : (
                                 <>
                                     <HeartOff color="gray" fill="none" />

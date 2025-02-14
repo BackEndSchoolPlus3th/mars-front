@@ -24,7 +24,7 @@ const Header = () => {
 
     return (
         <>
-            <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between sticky top-0 z-50 mb-4 shadow-sm">
+            <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between sticky top-0 z-50 shadow-sm">
                 <div className="flex items-center space-x-8">
                     <Link to="/" className="flex items-center space-x-3">
                         <img src="/logo.png" alt="ComMars" className="h-10" />

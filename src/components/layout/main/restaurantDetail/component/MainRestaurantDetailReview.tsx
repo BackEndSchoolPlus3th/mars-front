@@ -1,6 +1,15 @@
 import React, { useEffect } from 'react';
 import { Search } from 'lucide-react';
 import ReviewCard from '../card/ReviewCard';
+import MainAddReview from "./MainAddReview";
+
+interface ReviewData {
+    body: string;
+    rate: number;
+    reviewName: string;
+    userName: string;
+    id: number;
+}
 
 interface MainRestaurantDetailReviewProps {
     restaurantReviews: {

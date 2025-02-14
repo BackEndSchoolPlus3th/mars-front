@@ -23,7 +23,9 @@ const RestaurantCard: React.FC<RestaurantProps> = ({
         <h4 className="font-medium text-gray-900 mb-1">{name}</h4>
         <p className="text-gray-500 text-sm mb-2">{details}</p>
         <div className="flex items-center space-x-2 text-sm">
-          <span className="text-orange-500">⭐ {averageRate.toFixed(1)}</span>
+          <span className="text-orange-500">
+            ⭐ {averageRate ? averageRate.toFixed(1) : '0.0'}
+          </span>
         </div>
       </div>
     </div>

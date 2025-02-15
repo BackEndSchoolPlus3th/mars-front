@@ -7,6 +7,13 @@ import type {
     ApiResponse,
 } from '../types';
 
+export interface RestaurantResponse {
+    id: number;
+    name: string;
+    details: string;
+    averageRate: number;
+}
+
 // API 엔드포인트 상수
 const RESTAURANT_API = '/api/v1/restaurant';
 const RESTAURANTS_DOC_API = '/api/v1/restaurantsDoc';
@@ -25,16 +32,22 @@ const handleApiError = (error: AxiosError) => {
 };
 
 // 추천 맛집 훅 수정
-export const useRecommendedRestaurants = () => {
-    return useQuery<Restaurant[], Error>(
-        ['recommendedRestaurants'],
-        async () => {
-            const response = await apiClient.get<ApiResponse<Restaurant[]>>(
-                `${RESTAURANTS_DOC_API}/sort/rate`,
-            );
-            return response.data.data;
-        },
-    );
+export const useRecommendedRestaurants = async (): Promise<RestaurantResponse[]> => {
+    try {
+        const response = await apiClient.get<RestaurantResponse[]>(
+            `${RESTAURANTS_DOC_API}/sort/rate`,
+        );
+        // 응답 데이터의 평균 평점 필드를 일관되게 매핑
+        const mappedData = response.data.map(restaurant => ({
+            ...restaurant,
+            averageRate: restaurant.averageRate || (restaurant as any).average_rate || 0
+        }));
+        console.log('추천 식당 데이터 조회:', mappedData);
+        return mappedData;
+    } catch (error) {
+        console.error('추천 식당 데이터 조회 실패:', error);
+        throw error;
+    }
 };
 
 // 식당 상세 정보

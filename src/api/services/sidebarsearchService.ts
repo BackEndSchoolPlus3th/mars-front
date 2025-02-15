@@ -23,13 +23,13 @@ export const fetchRestaurants = async (): Promise<RestaurantResponse[]> => {
 export const searchRestaurants = async (
     query: string,
     lat: number,
-    lng: number,
+    lon: number,
 ): Promise<RestaurantResponse[]> => {
     try {
         const response = await apiClient.get<RestaurantResponse[]>(
             `/api/v1/restaurantsDoc/search?keyword=${encodeURIComponent(
                 query,
-            )}&lat=${lat}&lng=${lng}`,
+            )}&lat=${lat}&lon=${lon}`,
         );
         return response.data;
     } catch (error) {

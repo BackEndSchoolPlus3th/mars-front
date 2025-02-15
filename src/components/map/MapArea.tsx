@@ -90,16 +90,27 @@ const MapArea: React.FC<MapAreaProps> = ({
     }, []);
 
     useEffect(() => {
-        const fetchLocation = async () => {
-            const location = await userLocationService.getUserLocation();
-            setCurrentCenter({
-                lat: parseFloat(location.latitude),
-                lng: parseFloat(location.longitude),
-            });
+        const initializeMap = async () => {
+            try {
+                const location = await userLocationService.getUserLocation();
+                const newCenter = {
+                    lat: parseFloat(location.latitude),
+                    lng: parseFloat(location.longitude),
+                };
+                setCurrentCenter(newCenter);
+                prevCenterRef.current = newCenter; // prevCenter도 함께 업데이트
+                
+                // 위치 설정 후 주변 식당 조회
+                const response = await nearRestaurant(newCenter.lat, newCenter.lng, 2);
+                console.log('주변 식당 데이터 조회:', response);
+                setRestaurants(response);
+            } catch (error) {
+                console.error('위치 정보 초기화 실패:', error);
+            }
         };
-        fetchLocation();
-        fetchNearRestaurants();
-    }, []);
+
+        initializeMap();
+    }, []); // 의존성 배열을 비워두어 초기 렌더링 시에만 실행
 
     return (
         <div className="h-full w-full">

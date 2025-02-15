@@ -42,6 +42,7 @@ export const useRecommendedRestaurants = async (): Promise<RestaurantResponse[]>
             ...restaurant,
             averageRate: restaurant.averageRate || (restaurant as any).average_rate || 0
         }));
+
         console.log('추천 식당 데이터 조회:', mappedData);
         return mappedData;
     } catch (error) {

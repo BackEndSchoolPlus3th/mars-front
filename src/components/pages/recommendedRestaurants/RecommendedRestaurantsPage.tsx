@@ -27,7 +27,7 @@ const RecommendedRestaurantsPage = () => {
     );
     const [currentCenter, setCurrentCenter] = useState({
         lat: 37.5665,
-        lng: 126.978,
+        lon: 126.978,
     });
     const navigate = useNavigate();
 
@@ -44,14 +44,14 @@ const RecommendedRestaurantsPage = () => {
                 response =
                     await recommendedRestaurantsService.getRandomRestaurants(
                         currentCenter.lat,
-                        currentCenter.lng,
+                        currentCenter.lon,
                     );
             } else {
                 // 비로그인 유저
                 response =
                     await recommendedRestaurantsService.getNotUserRandomRestaurants(
                         currentCenter.lat,
-                        currentCenter.lng,
+                        currentCenter.lon,
                     );
             }
 
@@ -84,7 +84,7 @@ const RecommendedRestaurantsPage = () => {
             const location = await userLocationService.getUserLocation();
             setCurrentCenter({
                 lat: parseFloat(location.latitude),
-                lng: parseFloat(location.longitude),
+                lon: parseFloat(location.longitude),
             });
         };
         //fetchLocation();

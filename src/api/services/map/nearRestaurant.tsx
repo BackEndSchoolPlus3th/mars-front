@@ -2,14 +2,14 @@ import apiClient from '../../apiClient';
 
 export const nearRestaurant = async (
     lat: number,
-    lng: number,
+    lon: number,
     distance: number,
 ) => {
     try {
         const response = await apiClient.get('/api/v1/restaurantsDoc/nearby', {
             params: {
                 lat,
-                lng,
+                lon,
                 distance,
             },
         });

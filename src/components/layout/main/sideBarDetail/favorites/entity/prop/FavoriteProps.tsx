@@ -7,7 +7,7 @@ export interface RestaurantList {
     contact: string;
     address: string;
     lat: number;
-    lng: number;
+    lon: number;
     runningState: boolean;
     summarizedReview: string;
     categoryId: number;

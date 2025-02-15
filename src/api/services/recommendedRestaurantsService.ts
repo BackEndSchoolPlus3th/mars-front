@@ -5,9 +5,9 @@ import type { RestaurantReviewAnalysisDTO } from "../types";
 
 export const recommendedRestaurantsService = {
   // 랜덤 5개 식당 조회: GET /api/v1/today-random/random
-  async getRandomRestaurants(lat: number, lng: number): Promise<ApiResponse<{ restaurants: RestaurantSummaryDTO[] }>> {
+  async getRandomRestaurants(lat: number, lon: number): Promise<ApiResponse<{ restaurants: RestaurantSummaryDTO[] }>> {
     return apiClient.get(`/api/v1/today-random/random`, {
-      params: { lat, lng},
+      params: { lat, lon},
     });
   },
 
@@ -19,9 +19,9 @@ export const recommendedRestaurantsService = {
   },
 
   // 유저 아닐 때: 랜덤 5개 식당 조회 (id 없이 요청)
-  async getNotUserRandomRestaurants(lat: number, lng: number): Promise<ApiResponse<{ restaurants: RestaurantSummaryDTO[] }>> {
+  async getNotUserRandomRestaurants(lat: number, lon: number): Promise<ApiResponse<{ restaurants: RestaurantSummaryDTO[] }>> {
     return apiClient.get(`/api/v1/today-random/notuser/random`, {
-      params: { lat, lng },
+      params: { lat, lon },
     });
   },
 

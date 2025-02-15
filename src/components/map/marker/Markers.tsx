@@ -13,7 +13,7 @@ interface MarkerDetail {
     location: string;
     averageRating: number;
     lat: number;
-    lng: number;
+    lon: number;
 }
 
 interface MarkerProps {
@@ -41,7 +41,7 @@ const Markers: React.FC<MarkerProps> = ({
         <div>
             <AdvancedMarker
                 key={restaurant.id}
-                position={{ lat: restaurant.lat, lng: restaurant.lng }}
+                position={{ lat: restaurant.lat, lng: restaurant.lon }}
                 ref={markerRef}
                 onMouseEnter={handleMarkerMouseOver}
                 onMouseLeave={handleMarkerMouseOut}
@@ -50,7 +50,7 @@ const Markers: React.FC<MarkerProps> = ({
             {showWindow && (
                 <InfoWindow
                     anchor={setMarkerRef}
-                    position={{ lat: restaurant.lat, lng: restaurant.lng }}
+                    position={{ lat: restaurant.lat, lon: restaurant.lon }}
                     onCloseClick={handleMarkerMouseOut}
                     disableAutoPan={true}
                     children={

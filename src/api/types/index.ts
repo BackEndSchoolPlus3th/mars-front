@@ -25,7 +25,7 @@ export interface Restaurant {
     imageUrl: string;
     categoryId: string;
     lat: number;
-    lng: number;
+    lon: number;
     runningState: string;
 }
 

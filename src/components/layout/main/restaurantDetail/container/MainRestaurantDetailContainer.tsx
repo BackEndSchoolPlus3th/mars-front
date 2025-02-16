@@ -133,23 +133,23 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                                 className="mr-2 mt-0.5 text-gray-400"
                             />
                             <div>
-                                <p>
-                                    {restaurant.businessHours[0].open} -{' '}
-                                    {restaurant.businessHours[0].close}
-                                </p>
-                                {restaurant.businessHours[0].breakTime && (
-                                    <p className="text-orange-500">
-                                        브레이크타임:{' '}
-                                        {
-                                            restaurant.businessHours[0]
-                                                .breakTime.start
-                                        }{' '}
-                                        -{' '}
-                                        {
-                                            restaurant.businessHours[0]
-                                                .breakTime.end
-                                        }
-                                    </p>
+                                {restaurant.businessHours && restaurant.businessHours.length > 0 ? (
+                                    <>
+                                        <p>
+                                            {restaurant.businessHours[0].open} -{' '}
+                                            {restaurant.businessHours[0].close}
+                                        </p>
+                                        {restaurant.businessHours[0].breakTime && (
+                                            <p className="text-orange-500">
+                                                브레이크타임:{' '}
+                                                {restaurant.businessHours[0].breakTime.start}{' '}
+                                                -{' '}
+                                                {restaurant.businessHours[0].breakTime.end}
+                                            </p>
+                                        )}
+                                    </>
+                                ) : (
+                                    <p>영업시간 정보가 없습니다.</p>
                                 )}
                                 {restaurant.runningState ? (
                                     <p className="text-green-500">영업중</p>

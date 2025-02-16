@@ -30,3 +30,18 @@ export const reviewService = {
     });
   },
 };
+
+export const searchReviews = async (keyword: string): Promise<Review[]> => {
+  try {
+    const response = await apiClient.get(`/api/v1/reviewsDocs/search`, {
+      params: { keyword }
+    });
+    // 응답 데이터 구조 확인을 위한 로깅
+    console.log('Search response:', response);
+    // response.data가 배열이 아닐 경우 처리
+    return Array.isArray(response.data) ? response.data : response.data.data || [];
+  } catch (error) {
+    console.error('Error searching reviews:', error);
+    throw error;
+  }
+};

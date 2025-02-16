@@ -212,6 +212,7 @@ const RestaurantDetailContainer: React.FC<RestaurantDetailContainerProps> = ({
                                 <MainRestaurantDetailReview
                                     restaurantReviews={restaurant.reviews}
                                     showAddReview={setShowAddReview}
+                                    restaurantId={restaurantId}
                                 />
                             )}
                         </div>
